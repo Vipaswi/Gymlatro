@@ -165,8 +165,7 @@ func switchCardFocus() -> void:
 	if(currentCardIndex == 0):
 		playTransition("animate1");
 	else:
-		playTransition("loopCard1");
-		playTransition("init");
+		playTransition("loopcard1");
 	
 	resetInputs(); #reset input after animation completion
 	currentCardIndex = (currentCardIndex - 1) * currentCardIndex + (currentCardIndex + 1) * (currentCardIndex - 1) * -1; #cool formula to make my head hurt more :)
