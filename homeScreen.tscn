@@ -1,0 +1,39 @@
+[gd_scene load_steps=8 format=3 uid="uid://frhr4uc2k4te"]
+
+[ext_resource type="PackedScene" uid="uid://dch0jbuvy57y8" path="res://jackedVisheshPixelated.tscn" id="1_4lm70"]
+[ext_resource type="Shader" uid="uid://dcj6aleh6eaxg" path="res://balatroShader.gdshader" id="1_d7d0y"]
+[ext_resource type="PackedScene" uid="uid://b2fpff1n60tga" path="res://settingsButtonComp.tscn" id="2_d7d0y"]
+[ext_resource type="Script" uid="uid://dcl2yco4o81dx" path="res://homePage.gd" id="2_xodkv"]
+[ext_resource type="PackedScene" uid="uid://up761v3e6nj4" path="res://playButtonComp.tscn" id="3_xodkv"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xodkv"]
+shader = ExtResource("1_d7d0y")
+shader_parameter/spin_rotation_speed = 2.0
+shader_parameter/move_speed = 7.0
+shader_parameter/offset = Vector2(0, 0)
+shader_parameter/colour_1 = Color(0.871, 0.267, 0.231, 1)
+shader_parameter/colour_2 = Color(0, 0.42, 0.706, 1)
+shader_parameter/colour_3 = Color(0.086, 0.137, 0.145, 1)
+shader_parameter/contrast = 3.5
+shader_parameter/lighting = 0.4
+shader_parameter/spin_amount = 0.25
+shader_parameter/pixel_filter = 740.0
+shader_parameter/is_rotating = false
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_732tq"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_xodkv")
+offset_right = 431.0
+offset_bottom = 648.0
+texture = SubResource("AnimatedTexture_732tq")
+stretch_mode = 6
+script = ExtResource("2_xodkv")
+
+[node name="TextureRect2" parent="." instance=ExtResource("1_4lm70")]
+
+[node name="Control2" parent="." instance=ExtResource("2_d7d0y")]
+
+[node name="Control" parent="." instance=ExtResource("3_xodkv")]
