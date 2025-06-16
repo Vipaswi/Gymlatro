@@ -226,7 +226,7 @@ _data = {
 &"RESET": SubResource("Animation_eod45")
 }
 
-[node name="Card1Control" type="Control" node_paths=PackedStringArray("button_submit_1", "button_submit_2", "button_submit_3", "weight_write_1", "weight_write_2", "weight_write_3", "rep_write_1", "rep_write_2", "rep_write_3", "exercise_label", "exercise_texture")]
+[node name="Card1Control" type="Control" node_paths=PackedStringArray("button_submit_1", "button_submit_2", "button_submit_3", "weight_write_1", "weight_write_2", "weight_write_3", "rep_write_1", "rep_write_2", "rep_write_3", "exercise_label", "exercise_texture", "animation_player")]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 60.0
@@ -245,6 +245,7 @@ rep_write_2 = NodePath("PanelContainer/VScrollBar/HBoxContainer2/RepWrite2")
 rep_write_3 = NodePath("PanelContainer/VScrollBar/HBoxContainer3/RepWrite3")
 exercise_label = NodePath("ExerciseLabel")
 exercise_texture = NodePath("TextureRect2")
+animation_player = NodePath("AnimationPlayer")
 
 [node name="CardBackImage" type="TextureRect" parent="."]
 material = SubResource("ShaderMaterial_ta5nu")

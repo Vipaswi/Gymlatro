@@ -15,3 +15,17 @@ extends Control
 @export var exercise_label: Label
 
 @export var exercise_texture: TextureRect;
+@export var animation_player: AnimationPlayer;
+
+signal submit_data(weight: String, reps: String);
+
+func _on_button_submit_1_button_up() -> void:
+	emit_signal("submit_data", weight_write_1.text, rep_write_1.text);
+
+
+func _on_button_submit_2_button_up() -> void:
+	emit_signal("submit_data", weight_write_2.text, rep_write_2.text);
+
+
+func _on_button_submit_3_button_up() -> void:
+	emit_signal("submit_data", weight_write_3.text, rep_write_3.text);

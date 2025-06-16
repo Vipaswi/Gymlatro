@@ -31,8 +31,12 @@ var currentCardIndex: int;
 
 #initialize starting conditions
 func _ready() -> void:
+	#initial conds
 	submitReps = false;
 	isPlaying = true;
+	
+	Card1Control.submit_data.connect(on_submit);
+	Card2Control.submit_data.connect(on_submit);
 	setAnimationProperties();
 	setButtonArray();
 	disableAllButtons(0);
@@ -45,7 +49,7 @@ func _ready() -> void:
 
 func setAnimationProperties() -> void:
 	transitionPlayer = %TransitionPlayer; #set the transition.
-	cards = [%Card1Control.get_node("AnimationPlayer"), %Card2Control.get_node("AnimationPlayer")];
+	cards = [Card1Control.animation_player, Card2Control.animation_player];
 	currentCardIndex = 0; #the first card;
 
 func playTransition(transitionName: String) -> void:
@@ -195,7 +199,7 @@ func resetInputs() -> void:
 	disableAllButtons(currentCardIndex);
 	enableNext(0, currentCardIndex);
 
-func on_submit(_button: Button, weight: String, reps: String) -> void:
+func on_submit(weight: String, reps: String) -> void:
 	#if weight.length() > 0 or reps.length() > 0:
 	if(weight.length() * reps.length() > 0):
 		var weightInt = int(weight);
@@ -226,46 +230,3 @@ func enableNext(exclusion: int, index: int) -> void:
 		inputWeightArray[index][exclusion-1].editable = false;
 		inputRepArray[index][exclusion-1].editable = false;
 		buttonArray[index][exclusion-1].disabled = true;
-
-func _on_button_submit_1_button_up() -> void:
-	var button = %ButtonSubmit1;
-	var reps = %RepWrite1;
-	var weight = %WeightWrite1;
-	print("submitted button 1 Card 1");
-	on_submit(button, reps.text, weight.text);
-
-
-func _on_button_submit_2_button_up() -> void:
-	var button = %ButtonSubmit2;
-	var reps = %RepWrite2;
-	var weight = %WeightWrite2;
-	on_submit(button, reps.text, weight.text);# Replace with function body.
-
-
-func _on_button_submit_3_button_up() -> void:
-	var button = %ButtonSubmit3;
-	var reps = %RepWrite3;
-	var weight = %WeightWrite3;
-	on_submit(button, reps.text, weight.text);# Replace with function body.
-
-
-
-func _on__button_submit_3_button_up_2() -> void:
-	var button = %ButtonSubmit3_2;
-	var reps = %RepWrite3_2;
-	var weight = %WeightWrite3_2;
-	on_submit(button, reps.text, weight.text);
-
-
-func _on__button_submit_2_button_up_2() -> void:
-	var button = %ButtonSubmit2_2;
-	var reps = %RepWrite2_2;
-	var weight = %WeightWrite2_2;
-	on_submit(button, reps.text, weight.text);
-
-
-func _on__button_submit_1_button_up_2() -> void:
-	var button = %ButtonSubmit1_2;
-	var reps = %RepWrite1_2;
-	var weight = %WeightWrite1_2;
-	on_submit(button, reps.text, weight.text);

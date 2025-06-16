@@ -226,7 +226,7 @@ _data = {
 &"RESET": SubResource("Animation_eod45")
 }
 
-[node name="Card2Control" type="Control" node_paths=PackedStringArray("button_submit_1", "button_submit_2", "button_submit_3", "weight_write_1", "weight_write_2", "weight_write_3", "rep_write_1", "rep_write_2", "rep_write_3", "exercise_label", "exercise_texture")]
+[node name="Card2Control" type="Control" node_paths=PackedStringArray("button_submit_1", "button_submit_2", "button_submit_3", "weight_write_1", "weight_write_2", "weight_write_3", "rep_write_1", "rep_write_2", "rep_write_3", "exercise_label", "exercise_texture", "animation_player")]
 layout_mode = 3
 anchors_preset = 0
 offset_left = -361.0
@@ -245,6 +245,7 @@ rep_write_2 = NodePath("PanelContainer/VScrollBar/HBoxContainer2/RepWrite2_2")
 rep_write_3 = NodePath("PanelContainer/VScrollBar/HBoxContainer3/RepWrite3_2")
 exercise_label = NodePath("ExerciseLabel_2")
 exercise_texture = NodePath("TextureRect2_2")
+animation_player = NodePath("AnimationPlayer")
 
 [node name="CardBackImage" type="TextureRect" parent="."]
 material = SubResource("ShaderMaterial_ta5nu")
@@ -454,3 +455,7 @@ root_node = NodePath("../TextureRect2_2")
 libraries = {
 &"": SubResource("AnimationLibrary_nwk8b")
 }
+
+[connection signal="button_up" from="PanelContainer/VScrollBar/HBoxContainer/ButtonSubmit1_2" to="." method="_on_button_submit_1_button_up"]
+[connection signal="button_up" from="PanelContainer/VScrollBar/HBoxContainer2/ButtonSubmit2_2" to="." method="_on_button_submit_2_button_up"]
+[connection signal="button_up" from="PanelContainer/VScrollBar/HBoxContainer3/ButtonSubmit3_2" to="." method="_on_button_submit_3_button_up"]
