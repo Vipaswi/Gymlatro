@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://c2mj47e1m11e5"]
+[gd_scene load_steps=25 format=3 uid="uid://c2mj47e1m11e5"]
 
 [ext_resource type="Script" uid="uid://de2t2xdmh8mu1" path="res://gameplay.gd" id="1_2ihbs"]
 [ext_resource type="Shader" uid="uid://c4igox6oplpws" path="res://scoreboard.gdshader" id="1_fbudy"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cu0kmvxlsrkxt" path="res://card_1_control.tscn" id="8_2ihbs"]
 [ext_resource type="Texture2D" uid="uid://cmpvplpr25fx" path="res://bottomCard.png" id="9_1qy1k"]
 [ext_resource type="PackedScene" uid="uid://dwxfxf7xwv1a5" path="res://card_2_control.tscn" id="9_3n40r"]
+[ext_resource type="Theme" uid="uid://cdqannvs4mgim" path="res://lineedit.tres" id="10_1qy1k"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3n40r"]
 shader = ExtResource("2_1qy1k")
@@ -312,6 +313,234 @@ _data = {
 &"loopcard1": SubResource("Animation_x2ust")
 }
 
+[sub_resource type="Animation" id="Animation_tyrfw"]
+resource_name = "NewScore"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RepsChips:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.133333, 0.666667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MultiplierSign:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.666667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("WeightMult:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.666667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("RepsChips:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.334755, 0.533367, 0.666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 0.1), Vector2(1, 1), Vector2(1, 1), Vector2(0.5, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("MultiplierSign:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.233333, 0.533367, 0.666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 0.1), Vector2(1, 0.1), Vector2(1, 1), Vector2(0.5, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("WeightMult:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.233333, 0.533367, 0.666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 0.1), Vector2(1, 0.1), Vector2(1, 1), Vector2(0.5, 1)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("RepsChips:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.533333, 0.666667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(142, 177), Vector2(142, 177), Vector2(177, 158)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("MultiplierSign:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.533333, 0.666667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(203, 175), Vector2(203, 175), Vector2(209, 158)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("WeightMult:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 0.533333, 0.666667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(225, 175), Vector2(225, 175), Vector2(222, 155)]
+}
+
+[sub_resource type="Animation" id="Animation_eod45"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RepsChips:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MultiplierSign:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("WeightMult:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("RepsChips:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("MultiplierSign:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 0.1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("WeightMult:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 0.1)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("RepsChips:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(142, 177)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("MultiplierSign:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(203, 175)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("WeightMult:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(225, 175)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nwk8b"]
+_data = {
+&"NewScore": SubResource("Animation_tyrfw"),
+&"RESET": SubResource("Animation_eod45")
+}
+
 [node name="Node2d - gameplay" type="Node2D"]
 script = ExtResource("1_2ihbs")
 
@@ -467,9 +696,63 @@ text = "0"
 horizontal_alignment = 1
 vertical_alignment = 2
 
+[node name="RepsChips" type="Label" parent="."]
+unique_name_in_owner = true
+visible = false
+offset_left = 142.0
+offset_top = 177.0
+offset_right = 199.0
+offset_bottom = 201.0
+pivot_offset = Vector2(0, 28)
+theme = ExtResource("10_1qy1k")
+theme_override_colors/font_color = Color(0.333333, 0.717647, 0.92549, 1)
+theme_override_font_sizes/font_size = 24
+text = "1000"
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="MultiplierSign" type="Label" parent="."]
+visible = false
+offset_left = 203.0
+offset_top = 175.0
+offset_right = 222.0
+offset_bottom = 203.0
+scale = Vector2(1, 0.1)
+pivot_offset = Vector2(0, 28)
+theme = ExtResource("10_1qy1k")
+theme_override_font_sizes/font_size = 27
+text = "X"
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="WeightMult" type="Label" parent="."]
+unique_name_in_owner = true
+visible = false
+offset_left = 225.0
+offset_top = 175.0
+offset_right = 283.0
+offset_bottom = 203.0
+scale = Vector2(1, 0.1)
+pivot_offset = Vector2(0, 28)
+theme = ExtResource("10_1qy1k")
+theme_override_colors/font_color = Color(1, 0, 0.686275, 1)
+theme_override_font_sizes/font_size = 27
+text = "1000"
+vertical_alignment = 2
+
 [node name="TransitionPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
 root_node = NodePath("../Card2Control")
 libraries = {
 &"": SubResource("AnimationLibrary_7y1a3")
 }
+
+[node name="ScorePlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+&"": SubResource("AnimationLibrary_nwk8b")
+}
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="ScorePlayer"]
+
+[connection signal="animation_finished" from="TransitionPlayer" to="." method="_on_transition_player_animation_finished"]

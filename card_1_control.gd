@@ -21,7 +21,6 @@ extends Control
 signal submit_data(weight: String, reps: String);
 
 func _on_button_submit_1_button_up() -> void:
-	print("button1 submission!");
 	emit_signal("submit_data", weight_write_1.text, rep_write_1.text);
 
 

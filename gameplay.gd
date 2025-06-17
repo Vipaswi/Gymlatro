@@ -25,6 +25,9 @@ var submitted: int; #a number from 0 to buttonArray.size() (3) counting submitte
 var transitionPlayer;
 var cards;
 var currentCardIndex: int;
+var transitionComplete: bool;
+
+var _score_animation_tween: Tween;
 
 @onready var Card1Control = %Card1Control;
 @onready var Card2Control = %Card2Control;
@@ -34,6 +37,8 @@ func _ready() -> void:
 	#initial conds
 	submitReps = false;
 	isPlaying = true;
+	transitionComplete = true;
+	_score_animation_tween = null;
 	
 	Card1Control.submit_data.connect(on_submit);
 	Card2Control.submit_data.connect(on_submit);
@@ -54,7 +59,9 @@ func setAnimationProperties() -> void:
 
 func playTransition(transitionName: String) -> void:
 	transitionPlayer.play(transitionName);
+	transitionComplete = false;
 	await transitionPlayer.animation_finished;
+	transitionComplete = true;
 	
 func resetScores() -> void:
 	currentScore = 0;
@@ -87,8 +94,9 @@ func getNewRandomCard() -> void:
 	
 	var cardDisplay = Card1Control.exercise_texture if currentCardIndex == 0 else Card2Control.exercise_texture;
 	cardDisplay.texture = imageTexture;
+	if(!transitionComplete):
+		await transitionPlayer.animation_finished;
 	cards[currentCardIndex].play("CardFlip"); #Flip the card 
-	await cards[currentCardIndex].animation_finished;
 
 #Sets the text for all the labels based on game state
 func setLabelText() -> void:
@@ -163,8 +171,10 @@ func updateStats() -> void:
 
 func switchCardFocus() -> void:
 	if(currentCardIndex == 0):
+		Card2Control.animation_player.play("RESET");
 		playTransition("animate1");
 	else:
+		Card1Control.animation_player.play("RESET");
 		playTransition("loopcard1");
 	
 	resetInputs(); #reset input after animation completion
@@ -175,14 +185,6 @@ func _process(_delta: float) -> void:
 	if(isPlaying):
 		#win condition
 		setLabelText();
-		if(submitReps and (currentScore >= anteScore)):
-			updateStats();
-			switchCardFocus();
-			getNewRandomCard(); #display new card
-		elif (submitReps and !(currentScore <= anteScore) and submitted == 3):	
-			isPlaying = false;
-			submitReps = false;
-			displayLoss();
 
 func resetInputs() -> void:
 	for i in range(0, buttonArray.size()):
@@ -198,16 +200,70 @@ func resetInputs() -> void:
 	disableAllButtons(currentCardIndex);
 	enableNext(0, currentCardIndex);
 
+func animateOnSubmit(reps: int, weight: int) -> void:
+	#convert for sub anim
+	%RepsChips.text = str(reps);
+	%WeightMult.text = str(weight);
+	
+	#play sub anim
+	%ScorePlayer.play("NewScore");
+	await %ScorePlayer.animation_finished;
+	
+	#calculate properties of anim
+	var new_score = currentScore + reps * weight;
+	var currentScoreLabel = %CurrentScore;
+	var initial_score = currentScore;
+	var duration = 1.0;
+	
+	#kill old instances of tweens
+	if is_instance_valid(_score_animation_tween):
+		_score_animation_tween.kill();
+		_score_animation_tween = null; 
+	
+	var tweenObj = create_tween();
+	tweenObj.tween_method(func(value):
+			currentScore = int(value);
+			currentScoreLabel.text = str(currentScore);
+			, initial_score, new_score, duration
+			).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD);
+	
+	#wait
+	await tweenObj.finished;
+	
+	if is_instance_valid(_score_animation_tween):
+		#ensure equal
+		currentScore = new_score;
+		currentScoreLabel.text = str(currentScore);
+		#clear tween animation queue
+		_score_animation_tween.queue_free();
+		_score_animation_tween = null;
+	
+
 func on_submit(weight: String, reps: String) -> void:
 	#if weight.length() > 0 or reps.length() > 0:
 	if(weight.length() * reps.length() > 0):
+		#convert into integers
 		var weightInt = int(weight);
 		var repsInt = int(reps);
-		#TODO: Add animation for incrementing weight and repsInt
-		currentScore += weightInt * repsInt;
-		setLabelText();
-		submitReps = true;
-		submitted = submitted + 1; #increase submitted
+		
+		#animate
+		await animateOnSubmit(int(reps), int(weight));
+		
+		#increase submitted
+		submitted = submitted + 1;
+		
+		#win condition
+		if(currentScore >= anteScore):
+			updateStats();
+			switchCardFocus();
+			getNewRandomCard(); 
+		#lose condition
+		elif (!(currentScore <= anteScore) and submitted == 3):	
+			isPlaying = false;
+			submitReps = false;
+			displayLoss();
+		
+		#Enable next button
 		enableNext(submitted, currentCardIndex); #submitted is, at a minimum, 1
 
 func disableAllButtons(index: int) -> void:
