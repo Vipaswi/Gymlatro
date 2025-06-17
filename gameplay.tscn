@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://c2mj47e1m11e5"]
+[gd_scene load_steps=34 format=3 uid="uid://c2mj47e1m11e5"]
 
 [ext_resource type="Script" uid="uid://de2t2xdmh8mu1" path="res://gameplay.gd" id="1_2ihbs"]
 [ext_resource type="Shader" uid="uid://c4igox6oplpws" path="res://scoreboard.gdshader" id="1_fbudy"]
@@ -10,6 +10,11 @@
 [ext_resource type="Texture2D" uid="uid://cmpvplpr25fx" path="res://bottomCard.png" id="9_1qy1k"]
 [ext_resource type="PackedScene" uid="uid://dwxfxf7xwv1a5" path="res://card_2_control.tscn" id="9_3n40r"]
 [ext_resource type="Theme" uid="uid://cdqannvs4mgim" path="res://lineedit.tres" id="10_1qy1k"]
+[ext_resource type="AudioStream" uid="uid://c5wwiqwnccqjm" path="res://audio/proper_chip_2.mp3" id="11_45aep"]
+[ext_resource type="AudioStream" uid="uid://cbaqm26c0nh8h" path="res://audio/card_flip_2.mp3" id="11_eod45"]
+[ext_resource type="AudioStream" uid="uid://7jphrqt1m64f" path="res://audio/card_hit.mp3" id="12_eod45"]
+[ext_resource type="AudioStream" uid="uid://csrq7awwf3pjd" path="res://audio/mult_1.mp3" id="12_tyrfw"]
+[ext_resource type="Script" uid="uid://c328gx56fnmcr" path="res://LoseScreen.gd" id="15_nwk8b"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3n40r"]
 shader = ExtResource("2_1qy1k")
@@ -127,6 +132,30 @@ tracks/6/keys = {
 "update": 0,
 "values": [0.0]
 }
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("%TransitionPlayer/TransitionAudio:stream")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("11_eod45")]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("%TransitionPlayer/TransitionAudio:playing")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_nwk8b"]
 resource_name = "animate1"
@@ -177,6 +206,30 @@ tracks/3/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 0,
 "values": [0.0, 0.29147, 0.656244, 0.656244, 0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("%TransitionPlayer/TransitionAudio:stream")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("12_eod45")]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("%TransitionPlayer/TransitionAudio:playing")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.133333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
 }
 
 [sub_resource type="Animation" id="Animation_3n40r"]
@@ -304,6 +357,30 @@ tracks/4/keys = {
 "update": 1,
 "values": [0]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("%TransitionPlayer/TransitionAudio:stream")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("12_eod45")]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("%TransitionPlayer/TransitionAudio:playing")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_7y1a3"]
 _data = {
@@ -322,7 +399,7 @@ tracks/0/path = NodePath("RepsChips:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.133333, 0.666667),
+"times": PackedFloat32Array(0, 0.233333, 0.866667),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [false, true, false]
@@ -334,7 +411,7 @@ tracks/1/path = NodePath("MultiplierSign:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.4, 0.666667),
+"times": PackedFloat32Array(0, 0.466667, 0.866667),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [false, true, false]
@@ -346,7 +423,7 @@ tracks/2/path = NodePath("WeightMult:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.4, 0.666667),
+"times": PackedFloat32Array(0, 0.466667, 0.866667),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [false, true, false]
@@ -358,7 +435,7 @@ tracks/3/path = NodePath("RepsChips:scale")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.334755, 0.533367, 0.666667),
+"times": PackedFloat32Array(0, 0.334755, 0.533333, 0.866667),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
 "values": [Vector2(1, 0.1), Vector2(1, 1), Vector2(1, 1), Vector2(0.5, 1)]
@@ -370,7 +447,7 @@ tracks/4/path = NodePath("MultiplierSign:scale")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.233333, 0.533367, 0.666667),
+"times": PackedFloat32Array(0, 0.433333, 0.533333, 0.866667),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
 "values": [Vector2(1, 0.1), Vector2(1, 0.1), Vector2(1, 1), Vector2(0.5, 1)]
@@ -382,7 +459,7 @@ tracks/5/path = NodePath("WeightMult:scale")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.233333, 0.533367, 0.666667),
+"times": PackedFloat32Array(0, 0.433333, 0.533333, 0.866667),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
 "values": [Vector2(1, 0.1), Vector2(1, 0.1), Vector2(1, 1), Vector2(0.5, 1)]
@@ -394,7 +471,7 @@ tracks/6/path = NodePath("RepsChips:position")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0, 0.533333, 0.666667),
+"times": PackedFloat32Array(0, 0.699966, 0.866667),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector2(142, 177), Vector2(142, 177), Vector2(177, 158)]
@@ -406,7 +483,7 @@ tracks/7/path = NodePath("MultiplierSign:position")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0, 0.533333, 0.666667),
+"times": PackedFloat32Array(0, 0.699966, 0.866667),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector2(203, 175), Vector2(203, 175), Vector2(209, 158)]
@@ -418,10 +495,45 @@ tracks/8/path = NodePath("WeightMult:position")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
-"times": PackedFloat32Array(0, 0.533333, 0.666667),
+"times": PackedFloat32Array(0, 0.699966, 0.866667),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector2(225, 175), Vector2(225, 175), Vector2(222, 155)]
+}
+tracks/9/type = "audio"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("ScorePlayer/AudioStreamPlayer2D")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"clips": [],
+"times": PackedFloat32Array()
+}
+tracks/9/use_blend = true
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("ScorePlayer/AudioStreamPlayer2D:stream")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 0.366667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("11_45aep"), ExtResource("12_tyrfw")]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("ScorePlayer/AudioStreamPlayer2D:playing")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.433333),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, true]
 }
 
 [sub_resource type="Animation" id="Animation_eod45"]
@@ -534,12 +646,60 @@ tracks/8/keys = {
 "update": 0,
 "values": [Vector2(225, 175)]
 }
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("ScorePlayer/AudioStreamPlayer2D:stream")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("11_45aep")]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("ScorePlayer/AudioStreamPlayer2D:playing")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_nwk8b"]
 _data = {
 &"NewScore": SubResource("Animation_tyrfw"),
 &"RESET": SubResource("Animation_eod45")
 }
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_eod45"]
+shader = ExtResource("2_1qy1k")
+shader_parameter/spin_rotation_speed = 2.0
+shader_parameter/move_speed = 7.0
+shader_parameter/offset = Vector2(0, 0)
+shader_parameter/colour_1 = Color(0.871, 0.267, 0.231, 1)
+shader_parameter/colour_2 = Color(0, 0.42, 0.706, 1)
+shader_parameter/colour_3 = Color(0.086, 0.137, 0.145, 1)
+shader_parameter/contrast = 3.5
+shader_parameter/lighting = 0.4
+shader_parameter/spin_amount = 0.25
+shader_parameter/pixel_filter = 740.0
+shader_parameter/is_rotating = false
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_nwk8b"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x2ust"]
+shader = ExtResource("2_0m7cd")
+shader_parameter/rows = 2000.0
+shader_parameter/color1 = Color(0.11, 0.11, 0.11, 1)
+shader_parameter/color2 = Color(0.22, 0.22, 0.22, 1)
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_7y1a3"]
 
 [node name="Node2d - gameplay" type="Node2D"]
 script = ExtResource("1_2ihbs")
@@ -747,6 +907,9 @@ libraries = {
 &"": SubResource("AnimationLibrary_7y1a3")
 }
 
+[node name="TransitionAudio" type="AudioStreamPlayer2D" parent="TransitionPlayer"]
+stream = ExtResource("11_eod45")
+
 [node name="ScorePlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
 libraries = {
@@ -754,5 +917,123 @@ libraries = {
 }
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="ScorePlayer"]
+unique_name_in_owner = true
+stream = ExtResource("11_45aep")
 
+[node name="YouLoseControl" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 0
+offset_left = 63.0
+offset_top = 189.0
+offset_right = 368.0
+offset_bottom = 492.0
+script = ExtResource("15_nwk8b")
+
+[node name="YouLose" type="TextureRect" parent="YouLoseControl"]
+modulate = Color(1.657, 0, 100, 1)
+material = SubResource("ShaderMaterial_eod45")
+layout_mode = 0
+offset_right = 305.0
+offset_bottom = 305.0
+texture = SubResource("PlaceholderTexture2D_nwk8b")
+expand_mode = 3
+stretch_mode = 6
+
+[node name="BackgroundTexture" type="TextureRect" parent="YouLoseControl"]
+material = SubResource("ShaderMaterial_x2ust")
+layout_mode = 0
+offset_left = 28.0
+offset_top = 41.0
+offset_right = 276.0
+offset_bottom = 81.0
+texture = SubResource("CanvasTexture_7y1a3")
+
+[node name="MaximumScoreText" type="Label" parent="YouLoseControl"]
+layout_mode = 0
+offset_left = 54.0
+offset_top = 11.0
+offset_right = 248.0
+offset_bottom = 35.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_2ihbs")
+theme_override_font_sizes/font_size = 24
+text = "Maximum Score:"
+
+[node name="MaxScoreLabel" type="Label" parent="YouLoseControl"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 28.0
+offset_top = 41.0
+offset_right = 276.0
+offset_bottom = 81.0
+theme_override_colors/font_color = Color(0.839216, 0.572549, 0, 1)
+theme_override_fonts/font = ExtResource("3_2ihbs")
+theme_override_font_sizes/font_size = 34
+text = "1000000"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="AnteLabel" type="Label" parent="YouLoseControl"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 110.0
+offset_top = 103.0
+offset_right = 196.0
+offset_bottom = 137.0
+theme_override_fonts/font = ExtResource("3_2ihbs")
+theme_override_font_sizes/font_size = 24
+text = "Ante: X"
+
+[node name="RoundLabel_lose" type="Label" parent="YouLoseControl"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 98.0
+offset_top = 137.0
+offset_right = 203.0
+offset_bottom = 171.0
+theme_override_fonts/font = ExtResource("3_2ihbs")
+theme_override_font_sizes/font_size = 24
+text = "Round: X"
+
+[node name="TotalLiftedText" type="Label" parent="YouLoseControl"]
+layout_mode = 0
+offset_left = 75.0
+offset_top = 197.0
+offset_right = 225.0
+offset_bottom = 231.0
+theme_override_fonts/font = ExtResource("3_2ihbs")
+theme_override_font_sizes/font_size = 24
+text = "Total Lifted: "
+
+[node name="TotalLiftedLabel" type="Label" parent="YouLoseControl"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 64.0
+offset_top = 231.0
+offset_right = 237.0
+offset_bottom = 267.0
+theme = ExtResource("10_1qy1k")
+theme_override_colors/font_color = Color(0.3, 0.603333, 1, 1)
+theme_override_fonts/font = ExtResource("3_2ihbs")
+theme_override_font_sizes/font_size = 32
+text = "1000000"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="PlayAgainButton" type="Button" parent="YouLoseControl"]
+layout_mode = 0
+offset_left = 98.0
+offset_top = 267.0
+offset_right = 203.0
+offset_bottom = 299.0
+theme = ExtResource("10_1qy1k")
+text = "Play Again"
+
+[connection signal="set_ante" from="." to="YouLoseControl" method="set_ante_label"]
+[connection signal="set_max_score" from="." to="YouLoseControl" method="set_max_score"]
+[connection signal="set_round" from="." to="YouLoseControl" method="set_round_label"]
+[connection signal="set_total_score" from="." to="YouLoseControl" method="set_total_lifted_label"]
 [connection signal="animation_finished" from="TransitionPlayer" to="." method="_on_transition_player_animation_finished"]
+[connection signal="is_playing" from="YouLoseControl" to="." method="plays_again"]
+[connection signal="button_up" from="YouLoseControl/PlayAgainButton" to="YouLoseControl" method="_on_play_again_button_button_up"]

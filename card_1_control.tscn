@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cu0kmvxlsrkxt"]
+[gd_scene load_steps=15 format=3 uid="uid://cu0kmvxlsrkxt"]
 
 [ext_resource type="Script" uid="uid://bd32rorhrh8y3" path="res://card_1_control.gd" id="1_wgmv5"]
 [ext_resource type="Shader" uid="uid://saieheb3epv5" path="res://cardPixelation.gdshader" id="1_wjatr"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://cmpvplpr25fx" path="res://bottomCard.png" id="4_kne4k"]
 [ext_resource type="Theme" uid="uid://cdqannvs4mgim" path="res://lineedit.tres" id="5_c0fjr"]
 [ext_resource type="FontFile" uid="uid://bogbaja756dmg" path="res://Minecraft.ttf" id="6_opwdb"]
+[ext_resource type="AudioStream" uid="uid://c0ih3ucqqqp58" path="res://audio/card_flip_1.mp3" id="8_0qutb"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ta5nu"]
 shader = ExtResource("1_wjatr")
@@ -120,6 +121,30 @@ tracks/7/keys = {
 "update": 1,
 "values": [-1, 0]
 }
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("%TextureRect2/../AnimationPlayer/AudioStreamPlayer2D:stream")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("8_0qutb")]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("%TextureRect2/../AnimationPlayer/AudioStreamPlayer2D:playing")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 0.0333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
 
 [sub_resource type="Animation" id="Animation_eod45"]
 length = 0.001
@@ -230,6 +255,30 @@ tracks/8/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(1, 1)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("%TextureRect2/../AnimationPlayer/AudioStreamPlayer2D:stream")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("8_0qutb")]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("%TextureRect2/../AnimationPlayer/AudioStreamPlayer2D:playing")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_nwk8b"]
@@ -471,6 +520,9 @@ root_node = NodePath("../TextureRect2")
 libraries = {
 &"": SubResource("AnimationLibrary_nwk8b")
 }
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="AnimationPlayer"]
+stream = ExtResource("8_0qutb")
 
 [connection signal="button_up" from="PanelContainer/VScrollBar/HBoxContainer1/ButtonSubmit1" to="." method="_on_button_submit_1_button_up"]
 [connection signal="button_up" from="PanelContainer/VScrollBar/HBoxContainer2/ButtonSubmit2" to="." method="_on_button_submit_2_button_up"]
