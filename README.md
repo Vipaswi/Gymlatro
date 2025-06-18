@@ -109,8 +109,6 @@ If you're exporting to Android:
 - Android *does not allow* access to `user://` without permissions
 - Ensure `res://images/*.png` and other assets are **explicitly included in export settings**
 
-✅ A working `.apk` is included in the repo: `GymlatroNosignal.apk`
-
 ## 🚀 Features
 
 - 🎴 Animated card flipping
