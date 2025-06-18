@@ -18,7 +18,7 @@ You enter your **weight lifted** and **number of reps** to simulate "playing a c
 ## 🗃 Project Structure
 
 A cloned copy of this repo contains all required files to run the game:
-
+```
 gymlatro/
 ├── audio/ # Sound effects (chip clicks, etc.)
 ├── images/ # Preloaded PNGs representing exercises
@@ -28,7 +28,7 @@ gymlatro/
 ├── addons/ # (Optional) plugins for version control, etc.
 ├── export_presets.cfg # Godot export config
 └── project.godot # Godot project file
-
+```
 
 > ⚠️ Note: Some files are still loosely organized from early dev. You may see files outside these folders.
 
@@ -62,7 +62,7 @@ Press ▶️ to run it, or export to Android via Project > Export.
 The gameplay happens here. Two animated card controls are used interchangeably.
 
 #### Node Tree (Simplified)
-
+```
 GamePlay (Node2D)
 ├── TextureRect (background)
 ├── Card1Control (Control)
@@ -73,7 +73,7 @@ GamePlay (Node2D)
 │ ├── (same structure as Card1Control)
 ├── TransitionPlayer (AnimationPlayer)
 └── YouLoseControl (Lose screen)
-
+```
 
 - Card switching simulates card animations like Balatro.
 - Inputs include `Weight`, `Reps`, and `Submit` buttons per set.
