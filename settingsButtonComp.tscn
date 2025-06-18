@@ -25,3 +25,5 @@ anchor_left = 0.0
 anchor_right = 0.0
 offset_left = 0.0
 offset_right = 180.0
+theme_override_font_sizes/font_size = 18
+text = "Aesthetic Button"

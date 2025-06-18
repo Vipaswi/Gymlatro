@@ -27,13 +27,25 @@ shader_parameter/is_rotating = false
 [node name="TextureRect" type="TextureRect" parent="."]
 material = SubResource("ShaderMaterial_xodkv")
 offset_right = 431.0
-offset_bottom = 648.0
+offset_bottom = 910.0
 texture = SubResource("AnimatedTexture_732tq")
 stretch_mode = 6
 script = ExtResource("2_xodkv")
 
 [node name="TextureRect2" parent="." instance=ExtResource("1_4lm70")]
+offset_left = 90.0
+offset_top = 192.0
+offset_right = 335.0
+offset_bottom = 561.0
 
 [node name="Control2" parent="." instance=ExtResource("2_d7d0y")]
+offset_left = 132.0
+offset_top = 646.0
+offset_right = 305.0
+offset_bottom = 696.0
 
 [node name="Control" parent="." instance=ExtResource("3_xodkv")]
+offset_left = 132.0
+offset_top = 578.0
+offset_right = 312.0
+offset_bottom = 627.0

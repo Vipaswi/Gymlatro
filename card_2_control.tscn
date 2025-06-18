@@ -393,6 +393,7 @@ theme = ExtResource("5_64kwa")
 placeholder_text = "XX"
 alignment = 1
 max_length = 3
+virtual_keyboard_type = 2
 script = SubResource("GDScript_2ihbs")
 
 [node name="RepsLabel" type="Label" parent="PanelContainer/VScrollBar/HBoxContainer"]
@@ -403,6 +404,7 @@ text = "Reps"
 unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("5_64kwa")
+theme_override_fonts/font = ExtResource("6_77k1c")
 text = "✓"
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/VScrollBar"]
@@ -425,6 +427,7 @@ theme = ExtResource("5_64kwa")
 placeholder_text = "XX"
 alignment = 1
 max_length = 3
+virtual_keyboard_type = 2
 
 [node name="WeightLabel" type="Label" parent="PanelContainer/VScrollBar/HBoxContainer2"]
 layout_mode = 2
@@ -437,6 +440,7 @@ theme = ExtResource("5_64kwa")
 placeholder_text = "XX"
 alignment = 1
 max_length = 3
+virtual_keyboard_type = 2
 
 [node name="RepsLabel" type="Label" parent="PanelContainer/VScrollBar/HBoxContainer2"]
 layout_mode = 2
@@ -446,6 +450,7 @@ text = "Reps"
 unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("5_64kwa")
+theme_override_fonts/font = ExtResource("6_77k1c")
 text = "✓"
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="PanelContainer/VScrollBar"]
@@ -466,6 +471,7 @@ theme = ExtResource("5_64kwa")
 placeholder_text = "XX"
 alignment = 1
 max_length = 3
+virtual_keyboard_type = 2
 
 [node name="WeightLabel" type="Label" parent="PanelContainer/VScrollBar/HBoxContainer3"]
 layout_mode = 2
@@ -479,6 +485,7 @@ theme = ExtResource("5_64kwa")
 placeholder_text = "XX"
 alignment = 1
 max_length = 3
+virtual_keyboard_type = 2
 
 [node name="RepsLabel" type="Label" parent="PanelContainer/VScrollBar/HBoxContainer3"]
 layout_mode = 2
@@ -488,6 +495,7 @@ text = "Reps"
 unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("5_64kwa")
+theme_override_fonts/font = ExtResource("6_77k1c")
 text = "✓"
 
 [node name="ExerciseLabel_2" type="Label" parent="."]

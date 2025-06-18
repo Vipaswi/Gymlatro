@@ -1,17 +1,17 @@
 extends Node2D
 
 #declare all variables
-@onready var is_playing: bool = true;
+var is_playing: bool;
 var current_score: int;
 var ante: int;
 var ante_score: int;
 var round_count : int;
 var display_round: int; #bet. 1 and 3
-@onready var max_score: int = 0; 
-@onready var total_score: int = 0;
+var max_score: int; 
+var total_score: int;
 
 #signal related variables:
-@onready var submit_reps: bool = false;
+var submit_reps: bool;
 
 #temp array
 var exercise_array: PackedStringArray;
@@ -25,19 +25,25 @@ var submitted: int; #a number from 0 to button_array.size() (3) counting submitt
 
 #animation variables
 var transition_player;
-var cards;
+var cards : Array; #animation_player array
 var current_card_index: int;
-@onready var transition_complete: bool = true;
-@onready var _score_animation_tween: Tween = null;
-@onready var Card1Control = %Card1Control;
-@onready var Card2Control = %Card2Control;
-@onready var lose_screen = %YouLoseControl;
+var transition_complete: bool;
+var _score_animation_tween: Tween;
+var Card1Control;
+var Card2Control;
+var lose_screen;
 
 #signals for lose conds:
 signal set_max_score(max_score: int);
 signal set_ante(ante: int);
 signal set_round(round_count: int);
 signal set_total_score(total_score: int);
+
+#preloaded exercise images:
+var imageDictionary: Dictionary;
+
+#to avoid redundancy
+@onready var run_already = 0;
 
 #initialize starting conditions
 func _ready() -> void:
@@ -53,7 +59,7 @@ func set_initial_conditions() -> void:
 	transition_complete = true;
 	_score_animation_tween = null;
 	Card1Control = %Card1Control;
-	Card2Control = Card2Control;
+	Card2Control = %Card2Control;
 	lose_screen = %YouLoseControl;
 	
 	#hide LoseScene
@@ -61,14 +67,19 @@ func set_initial_conditions() -> void:
 	lose_screen.z_index = -1;
 	
 	#connect signals
-	Card1Control.submit_data.connect(on_submit);
-	Card2Control.submit_data.connect(on_submit);
+	if run_already == 0:
+		Card1Control.submit_data.connect(on_submit);
+		Card2Control.submit_data.connect(on_submit);
+		run_already = 1;
 	
 	#set stage for animationsn and initial positions
 	set_animation_properties();
-	play_transition("init");
+	await play_transition("init");
 	Card1Control.animation_player.play("RESET");
 	Card2Control.animation_player.play("RESET");
+	
+	await Card1Control.animation_player.animation_finished;
+	await Card2Control.animation_player.animation_finished;
 	
 	#buttons:
 	set_button_array();
@@ -84,6 +95,8 @@ func set_initial_conditions() -> void:
 	reset_scores();
 	get_exercises();
 	get_new_random_card();
+	flip_card();
+	
 
 func set_animation_properties() -> void:
 	transition_player = %TransitionPlayer; #set the transition.
@@ -92,9 +105,8 @@ func set_animation_properties() -> void:
 
 func play_transition(transitionName: String) -> void:
 	transition_player.play(transitionName);
-	transition_complete = false;
 	await transition_player.animation_finished;
-	transition_complete = true;
+	
 	
 func reset_scores() -> void:
 	current_score = 0;
@@ -120,21 +132,28 @@ func get_exercises() -> void:
 	if(exerciseString.length() <= 0):
 		push_error("No exercises to read from");
 	exercise_array = exerciseString.split("\n", false);
+	file.close();
+	
+	imageDictionary = {};
+	#preload exercises
+	for i in range(0, exercise_array.size()):
+		var resource = load("res://images/%s.png" % exercise_array.get(i))
+		if resource is Resource:
+			imageDictionary.set(exercise_array.get(i), resource);
 
 #is responsible for returning a new random card from the file system
 func get_new_random_card() -> void:
 	var randomInt = randi() % exercise_array.size();
 	current_exercise_name = exercise_array.get(randomInt);
 	
-	var formatString = "res://images/%s.png";
-	
-	var imageTexture = load(formatString % current_exercise_name);
+	var imageTexture = imageDictionary.get(current_exercise_name);
 	
 	var cardDisplay = Card1Control.exercise_texture if current_card_index == 0 else Card2Control.exercise_texture;
 	cardDisplay.texture = imageTexture;
-	if(!transition_complete):
-		await transition_player.animation_finished;
-	cards[current_card_index].play("CardFlip"); #Flip the card 
+
+func flip_card() -> void:
+	cards[current_card_index].play("CardFlip"); #Flip the current
+	await cards[current_card_index].animation_finished; 
 
 #Sets the text for all the labels based on game state
 func setLabelText() -> void:
@@ -213,13 +232,16 @@ func update_stats() -> void:
 func switch_card_focus() -> void:
 	if(current_card_index == 0):
 		Card2Control.animation_player.play("RESET");
-		play_transition("animate1");
+		await play_transition("animate1");
 	else:
 		Card1Control.animation_player.play("RESET");
-		play_transition("loopcard1");
+		await play_transition("loopcard1");
 	
 	reset_inputs(); #reset input after animation completion
-	current_card_index = (current_card_index - 1) * current_card_index + (current_card_index + 1) * (current_card_index - 1) * -1; #cool formula to make my head hurt more :)
+	current_card_index = 1 - current_card_index; 
+	
+	get_new_random_card();
+	await flip_card();
 	
 #basically our main game logic
 func _process(_delta: float) -> void:
@@ -229,14 +251,14 @@ func _process(_delta: float) -> void:
 		
 
 func reset_inputs() -> void:
-	for i in range(0, button_array.size()):
+	for i in range(0, button_array[current_card_index].size()):
 		button_array[current_card_index][i].disabled = false;
 		button_array[current_card_index][i].add_theme_color_override("white_font", Color(1,1,1,1));
 	
-	for i in range(0, input_rep_array.size()):
+	for i in range(0, input_rep_array[current_card_index].size()):
 		input_rep_array[current_card_index][i].text = ""; #reset to nothing
 		
-	for i in range(0, input_weight_array.size()):
+	for i in range(0, input_weight_array[current_card_index].size()):
 		input_weight_array[current_card_index][i].text = ""; #reset to nothing	
 		
 	disable_all_buttons(current_card_index);
@@ -303,8 +325,7 @@ func on_submit(weight: String, reps: String) -> void:
 		#win condition
 		if(current_score >= ante_score):
 			update_stats();
-			switch_card_focus();
-			get_new_random_card(); 
+			await switch_card_focus(); 
 		#lose condition
 		elif ((current_score < ante_score) and submitted == 3):	
 			is_playing = false;
@@ -336,3 +357,9 @@ func enable_next(exclusion: int, index: int) -> void:
 
 func plays_again() -> void:
 	set_initial_conditions();
+	
+func _on_transition_player_animation_finished(anim_name: StringName):
+	if anim_name == "animate1" or anim_name == "loopcard1":
+		#flip_card();
+		pass;
+		

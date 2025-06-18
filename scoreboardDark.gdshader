@@ -9,6 +9,6 @@ void fragment() {
     // Row coloring logic
     bool is_even_row = mod(floor(UV.y * rows), 2.0) == 0.0;
     vec4 row_color = is_even_row ? color1 : color2;
-	
+
 	COLOR = row_color;
 }

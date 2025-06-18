@@ -11,13 +11,17 @@ config_version=5
 [application]
 
 config/name="Gymlatro"
-run/main_scene="uid://b2k0kqiioewgs"
+run/main_scene="uid://frhr4uc2k4te"
 config/features=PackedStringArray("4.4", "Mobile")
-config/icon="res://icon.svg"
+config/icon="uid://d2cavmbj5hale"
 
 [display]
 
 window/size/viewport_width=431
+window/size/viewport_height=910
+window/size/mode=3
+window/stretch/mode="viewport"
+window/handheld/orientation=1
 
 [editor]
 
@@ -34,3 +38,4 @@ csv_translation={
 [rendering]
 
 renderer/rendering_method="mobile"
+textures/vram_compression/import_etc2_astc=true

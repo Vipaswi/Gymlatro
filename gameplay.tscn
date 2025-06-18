@@ -58,7 +58,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(60, 196)]
+"values": [Vector2(60, 270)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -70,7 +70,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-361, 196)]
+"values": [Vector2(-361, 270)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -169,7 +169,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.0666667, 0.116667, 0.166667),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(60, 196), Vector2(119, 196), Vector2(294.703, 196), Vector2(488, 196)]
+"values": [Vector2(60, 270), Vector2(119, 270), Vector2(294.703, 270), Vector2(488, 270)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -181,7 +181,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.0666667, 0.116667, 0.166667),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(-360, 196), Vector2(-302, 196), Vector2(-126.297, 196), Vector2(67, 196)]
+"values": [Vector2(-360, 270), Vector2(-302, 270), Vector2(-126.297, 270), Vector2(67, 270)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -244,7 +244,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(60, 196)]
+"values": [Vector2(60, 270)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -256,7 +256,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-361, 196)]
+"values": [Vector2(-361, 270)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -307,7 +307,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.0666667, 0.116667, 0.166667),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(-360, 196), Vector2(-302, 196), Vector2(-126.297, 196), Vector2(67, 196)]
+"values": [Vector2(-360, 270), Vector2(-302, 270), Vector2(-126.297, 270), Vector2(67, 270)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -319,7 +319,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.0666667, 0.116667, 0.166667),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(60, 196), Vector2(119, 196), Vector2(294.703, 196), Vector2(488, 196)]
+"values": [Vector2(60, 270), Vector2(119, 270), Vector2(294.703, 270), Vector2(488, 270)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -474,7 +474,7 @@ tracks/6/keys = {
 "times": PackedFloat32Array(0, 0.699966, 0.866667),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(142, 177), Vector2(142, 177), Vector2(177, 158)]
+"values": [Vector2(142, 240), Vector2(142, 240), Vector2(177, 158)]
 }
 tracks/7/type = "value"
 tracks/7/imported = false
@@ -486,7 +486,7 @@ tracks/7/keys = {
 "times": PackedFloat32Array(0, 0.699966, 0.866667),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(203, 175), Vector2(203, 175), Vector2(209, 158)]
+"values": [Vector2(203, 240), Vector2(203, 240), Vector2(209, 158)]
 }
 tracks/8/type = "value"
 tracks/8/imported = false
@@ -498,7 +498,7 @@ tracks/8/keys = {
 "times": PackedFloat32Array(0, 0.699966, 0.866667),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(225, 175), Vector2(225, 175), Vector2(222, 155)]
+"values": [Vector2(225, 240), Vector2(225, 240), Vector2(222, 155)]
 }
 tracks/9/type = "audio"
 tracks/9/imported = false
@@ -707,7 +707,7 @@ script = ExtResource("1_2ihbs")
 [node name="TextureRect" type="TextureRect" parent="."]
 material = SubResource("ShaderMaterial_3n40r")
 offset_right = 431.0
-offset_bottom = 648.0
+offset_bottom = 908.0
 texture = SubResource("AnimatedTexture_45aep")
 stretch_mode = 6
 
@@ -819,9 +819,9 @@ text = "5"
 [node name="Label6" type="Label" parent="Control"]
 layout_mode = 0
 offset_left = 142.0
-offset_top = 623.0
+offset_top = 832.0
 offset_right = 237.0
-offset_bottom = 651.0
+offset_bottom = 860.0
 theme_override_fonts/font = ExtResource("3_2ihbs")
 theme_override_font_sizes/font_size = 28
 text = "Round:"
@@ -839,9 +839,13 @@ text = "5"
 
 [node name="Card1Control" parent="." instance=ExtResource("8_2ihbs")]
 unique_name_in_owner = true
+offset_top = 270.0
+offset_bottom = 697.0
 
 [node name="Card2Control" parent="." instance=ExtResource("9_3n40r")]
 unique_name_in_owner = true
+offset_top = 270.0
+offset_bottom = 697.0
 rotation = 0.29147
 
 [node name="CurrentScore" type="Label" parent="."]
@@ -922,6 +926,7 @@ stream = ExtResource("11_45aep")
 
 [node name="YouLoseControl" type="Control" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = 63.0
@@ -1028,6 +1033,7 @@ offset_top = 267.0
 offset_right = 203.0
 offset_bottom = 299.0
 theme = ExtResource("10_1qy1k")
+theme_override_fonts/font = ExtResource("3_2ihbs")
 text = "Play Again"
 
 [connection signal="set_ante" from="." to="YouLoseControl" method="set_ante_label"]
