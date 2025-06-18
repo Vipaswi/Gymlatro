@@ -1,13 +1,13 @@
-🃏 Gymlatro
+#🃏 Gymlatro
 A Balatro-style game focused on beating a score within three sets, where your reps act as the chips,
 and the sets act as your multiplier. It uses Balatro's shaders and styler, with other UI elements mimicing its user interface.
 
-🎮 Overview
+##🎮 Overview
 The game consists of five exercises (for now), animations, and interactive controls to make a workout-inspired scoring system. You play "cards" by entering your weight and reps, aiming to beat the score threshold (ante score) each round.
 
 This game runs on Godot Engine and is entirely written in GDScript.
 
-🗃 Project Structure
+##🗃 Project Structure
 A clone of this repository will contain everything necessary to run the game. The following is an overview of the structure:
 
 scenes/ – All gameplay and UI scenes.
@@ -24,7 +24,7 @@ addons/ – (Optional) Any Godot plugins like version control support.
 
 ⚠️Note that many of the files (especially early game files) are unstructured, and aren't in these folders.
 
-📋 Setup Instructions
+##📋 Setup Instructions
 Install Godot Engine (v4.2 or newer)
 
 Clone the repository:
@@ -37,8 +37,8 @@ Run the project in the Godot editor or export to Android using the provided expo
 
 ✅ Note: All required resources are already included in the repo. No additional setup or dependencies needed.
 
-🧩 Scenes
-🏠 Homepage.tscn
+##🧩 Scenes
+###🏠 Homepage.tscn
 Contains two buttons:
 
 Play – Starts the game (functional).
@@ -47,7 +47,7 @@ Credits/Decoration – Aesthetic only.
 
 Styled with shaders and animated elements.
 
-🎮 GamePlay.tscn
+###🎮 GamePlay.tscn
 The heart of the game. Built with the following node structure:
 
 GamePlay (Node2D)
@@ -62,7 +62,7 @@ GamePlay (Node2D)
 └── LoseScreen (YouLoseControl)
 Card controls are handled in duplicate (Card1Control and Card2Control), alternating per round. This is to provide the animation of new cards being slid into the gameplay screen.
 
-🧠 Engineering Decisions
+##🧠 Engineering Decisions
 Card Flip Animation Handling
 Abstracted via a centralized AnimationPlayer (TransitionPlayer) and per-card AnimationPlayer. Uses await for sequencing and ensuring animations complete before state changes.
 
@@ -89,7 +89,7 @@ Not only that, but also explicitly include it in the resources section (e.g. res
 
 📝Note that a functional build, GymlatroNosignal.apk is already attached in the Github above.
 
-🚀 Features
+##🚀 Features
 Animated transitions & card flipping.
 
 Realtime score animation via tweens.
@@ -100,7 +100,7 @@ Responsive UI input validation and control locking.
 
 Modular design for expanding the number of exercises or cards.
 
-📄 License & Credits
+##📄 License & Credits
 Inspired by Balatro (gameplay & aesthetic).
 
 Some art is custom but stylistically modeled after Balatro.
@@ -109,7 +109,7 @@ Sound effects partially adapted (with credit) from Balatro sound design.
 
 ❗ This is a personal/fan-made project and is not affiliated with or endorsed by the creators of Balatro.
 
-🧪 Future Improvements
+##🧪 Future Improvements
 Add exercise images for all entries.
 
 Include more animated transitions.
@@ -124,5 +124,5 @@ Add a settings scene
 
 Organize folders
 
-🙋‍♂️ Contributing
+##🙋‍♂️ Contributing
 Feel free to fork the project, open issues, or create PRs for bug fixes and enhancements. No formal contribution rules—just keep it clean and readable.
