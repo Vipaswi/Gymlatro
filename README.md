@@ -1,128 +1,147 @@
-#🃏 Gymlatro
-A Balatro-style game focused on beating a score within three sets, where your reps act as the chips,
-and the sets act as your multiplier. It uses Balatro's shaders and styler, with other UI elements mimicing its user interface.
+# 🃏 Gymlatro
 
-##🎮 Overview
-The game consists of five exercises (for now), animations, and interactive controls to make a workout-inspired scoring system. You play "cards" by entering your weight and reps, aiming to beat the score threshold (ante score) each round.
+**Gymlatro** is a *Balatro*-inspired game for the gym, where your **reps act as chips** and your **sets are your multipliers**. It reuses Balatro-style shaders and UI inspiration while creating an interactive exercise-based score challenge.
 
-This game runs on Godot Engine and is entirely written in GDScript.
+🛠 Built with the **Godot Engine** in **GDScript**, playable on desktop and Android.
 
-##🗃 Project Structure
-A clone of this repository will contain everything necessary to run the game. The following is an overview of the structure:
+## 🎮 Overview
 
-scenes/ – All gameplay and UI scenes.
+The game consists of:
 
-scripts/ – The primary game logic, including animations, card state, and score updates.
+- Five preloaded exercises
+- Two animated cards for input
+- A "score threshold" (ante score) that increases every round
+- Balatro-inspired shaders, UI, and sound effects
 
-images/ – Card art and exercise icons.
+You enter your **weight lifted** and **number of reps** to simulate "playing a card." Your goal is to beat the ante score within three tries.
 
-audio/ – Sound effects inspired by Balatro.
+## 🗃 Project Structure
 
-exercises/ – Contains fiveExerciseList.txt, the exercise list loaded at runtime.
+A cloned copy of this repo contains all required files to run the game:
 
-addons/ – (Optional) Any Godot plugins like version control support.
+gymlatro/
+├── audio/ # Sound effects (chip clicks, etc.)
+├── images/ # Preloaded PNGs representing exercises
+├── scenes/ # Main scenes like homepage and gameplay
+├── scripts/ # Main GDScript files for logic & animation
+├── exercises/ # fiveExerciseList.txt (the list of exercise names)
+├── addons/ # (Optional) plugins for version control, etc.
+├── export_presets.cfg # Godot export config
+└── project.godot # Godot project file
 
-⚠️Note that many of the files (especially early game files) are unstructured, and aren't in these folders.
 
-##📋 Setup Instructions
-Install Godot Engine (v4.2 or newer)
+> ⚠️ Note: Some files are still loosely organized from early dev. You may see files outside these folders.
 
-Clone the repository:
+## 📋 Setup Instructions
 
+1. Install [Godot Engine](https://godotengine.org/) (v4.2 or newer)
+2. Clone this repository:
+
+```bash
 git clone https://github.com/your_username/gymlatro.git
 cd gymlatro
-Open the project in Godot.
+```
 
-Run the project in the Godot editor or export to Android using the provided export templates.
+Open the project in the Godot editor.
 
-✅ Note: All required resources are already included in the repo. No additional setup or dependencies needed.
+Press ▶️ to run it, or export to Android via Project > Export.
 
-##🧩 Scenes
-###🏠 Homepage.tscn
-Contains two buttons:
+✅ Note: No dependencies or assets need to be installed — everything is included.
 
-Play – Starts the game (functional).
+### 🧩 Scenes
 
-Credits/Decoration – Aesthetic only.
+## 🧩 Scenes
 
-Styled with shaders and animated elements.
+### 🏠 `Homepage.tscn`
+- Two buttons:
+  - `Play`: Starts the game ✅
+  - `Credits`: Aesthetic-only 🎨
+- Styled with Balatro-style shaders and animation
 
-###🎮 GamePlay.tscn
-The heart of the game. Built with the following node structure:
+### 🎮 `GamePlay.tscn`
+The gameplay happens here. Two animated card controls are used interchangeably.
+
+#### Node Tree (Simplified)
 
 GamePlay (Node2D)
-├── TextureRect
-├── Control (Card1Control)
-│   └── AnimationPlayer
-│   └── AudioStreamPlayer2D
-│   └── Input Controls (HBoxContainer → WeightWrite, RepWrite, Buttons)
-├── Control2 (Card2Control)
-│   └── (same as above)
+├── TextureRect (background)
+├── Card1Control (Control)
+│ ├── AnimationPlayer
+│ ├── AudioStreamPlayer2D
+│ └── Input Containers (HBoxContainers)
+├── Card2Control (Control)
+│ ├── (same structure as Card1Control)
 ├── TransitionPlayer (AnimationPlayer)
-└── LoseScreen (YouLoseControl)
-Card controls are handled in duplicate (Card1Control and Card2Control), alternating per round. This is to provide the animation of new cards being slid into the gameplay screen.
+└── YouLoseControl (Lose screen)
 
-##🧠 Engineering Decisions
-Card Flip Animation Handling
-Abstracted via a centralized AnimationPlayer (TransitionPlayer) and per-card AnimationPlayer. Uses await for sequencing and ensuring animations complete before state changes.
 
-Scene Reset & Game State Management
-set_initial_conditions() reinitializes all game state, used on startup and replay. Clean separation between UI resets and score logic.
+- Card switching simulates card animations like Balatro.
+- Inputs include `Weight`, `Reps`, and `Submit` buttons per set.
 
-Exercise Loading
-Exercises are read from a plain text file (fiveExerciseList.txt) and associated with .png assets by name. Images are preloaded into a dictionary for efficient access.
+## 🧠 Engineering Decisions
 
-Audio Feedback
-Submission animations are paired with a chip-like sound (proper_chip1.mp3) for tactile feedback.
+### Card Flip Animation
+- Controlled with `AnimationPlayer` + `await animation_finished`
+- Global animation transitions are handled by `TransitionPlayer`
 
-Cross-platform Readiness
-Runs on Android. Uses FileAccess for reading resources, which may be affected by Android file packaging rules—ensure paths use res://.
+### Game Reset
+- `set_initial_conditions()` resets variables, states, animations, and UI
+- Called on first run and replay
 
-Submission Logic
-User submits reps and weights up to 3 times per card. Game ends early if score exceeds the ante or continues until max attempts reached.
+### Exercise Loading
+- `fiveExerciseList.txt` is loaded using `FileAccess`
+- Exercises are matched to images via `imageDictionary`
 
-📱 Android Note
-If you're building for Android:
+### Sound Design
+- Submission is paired with `proper_chip1.mp3` (Balatro-like)
+- Feedback on each rep × weight submission
 
-Ensure the fiveExerciseList.txt is properly included in res:// and not user:// to avoid permission issues.
-Not only that, but also explicitly include it in the resources section (e.g. res://images/*, etc.) to ensure a functional build.
+### Submission Logic
+- 3 submissions per round
+- Early win if ante score is exceeded
+- Otherwise, lose screen after 3 attempts
 
-📝Note that a functional build, GymlatroNosignal.apk is already attached in the Github above.
+## 📱 Android Notes
 
-##🚀 Features
-Animated transitions & card flipping.
+If you're exporting to Android:
 
-Realtime score animation via tweens.
+- Ensure `fiveExerciseList.txt` is in the `res://` path
+- Android *does not allow* access to `user://` without permissions
+- Ensure `res://images/*.png` and other assets are **explicitly included in export settings**
 
-Shader-based visuals on labels and buttons.
+✅ A working `.apk` is included in the repo: `GymlatroNosignal.apk`
 
-Responsive UI input validation and control locking.
+## 🚀 Features
 
-Modular design for expanding the number of exercises or cards.
+- 🎴 Animated card flipping
+- 🔊 Tactile chip sounds
+- ✨ Balatro-style shaders for text/buttons
+- 📈 Realtime score animation with tweens
+- 🧩 Modular design for adding new exercises
+- 🎯 Functional on Android
 
-##📄 License & Credits
-Inspired by Balatro (gameplay & aesthetic).
+## 📄 License & Credits
 
-Some art is custom but stylistically modeled after Balatro.
+- Inspired by **Balatro** (gameplay, sound, visual style)
+- Some visuals are custom-made in the same aesthetic
+- Sound effects partially adapted with credit
 
-Sound effects partially adapted (with credit) from Balatro sound design.
+> ❗ This is a **fan project**. Not affiliated with or endorsed by Balatro creators.
 
-❗ This is a personal/fan-made project and is not affiliated with or endorsed by the creators of Balatro.
+## 🧪 Future Improvements
 
-##🧪 Future Improvements
-Add exercise images for all entries.
+- [ ] Add images for all exercises
+- [ ] Add difficulty levels and scaling
+- [ ] Implement analytics (avg reps/weight)
+- [ ] Add background music 🎵
+- [ ] Add settings and pause scenes
+- [ ] Refactor and organize file structure
 
-Include more animated transitions.
+## 🙋‍♂️ Contributing
 
-Add difficulty scaling and random events.
+Pull requests and forks are welcome!
 
-Implement pause, restart, and advanced analytics (e.g., average weight lifted).
+- 🐞 Open an issue for bugs
+- 🌱 Submit PRs for features or improvements
+- ✨ Keep code clean and readable
 
-Add music
-
-Add a settings scene
-
-Organize folders
-
-##🙋‍♂️ Contributing
-Feel free to fork the project, open issues, or create PRs for bug fixes and enhancements. No formal contribution rules—just keep it clean and readable.
