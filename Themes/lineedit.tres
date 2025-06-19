@@ -26,3 +26,5 @@ Button/styles/normal = SubResource("StyleBoxFlat_2y7sm")
 LineEdit/styles/focus = SubResource("StyleBoxEmpty_2y7sm")
 LineEdit/styles/normal = SubResource("StyleBoxFlat_5eceu")
 LineEdit/styles/read_only = SubResource("StyleBoxFlat_1gwd2")
+PopupMenu/fonts/font = ExtResource("1_2y7sm")
+PopupMenu/styles/panel = null

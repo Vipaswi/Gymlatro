@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://b7bfj1v7b322b"]
+
+[ext_resource type="Script" uid="uid://bivy4robb40j8" path="res://Scripts/play_button_comp.gd" id="1_7rwiy"]
+[ext_resource type="PackedScene" uid="uid://bnnoqhjsevbgc" path="res://Scenes/bluePlay.tscn" id="2_ndmum"]
+[ext_resource type="PackedScene" uid="uid://b7bl55nnnhp7a" path="res://Scenes/playButton.tscn" id="3_45i5v"]
+[ext_resource type="Shader" uid="uid://4oy7qxtaqfeu" path="res://Shaders/blueButtonRows.gdshader" id="3_kcu2h"]
+[ext_resource type="Texture2D" uid="uid://dvti7a6i2nj08" path="res://Image_Assets/mask.png" id="4_edo6h"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8cvoa"]
+resource_local_to_scene = true
+shader = ExtResource("3_kcu2h")
+shader_parameter/mask_texture = ExtResource("4_edo6h")
+shader_parameter/rows = 200.0
+shader_parameter/color1 = Color(0.117647, 0.12549, 0.137255, 1)
+shader_parameter/color2 = Color(0.0313726, 0.0705882, 0.0705882, 1)
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 140.0
+offset_top = 436.0
+offset_right = 320.0
+offset_bottom = 485.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_7rwiy")
+
+[node name="ColorRect" parent="." instance=ExtResource("2_ndmum")]
+modulate = Color(0, 0.517, 0.517, 1)
+material = SubResource("ShaderMaterial_8cvoa")
+layout_mode = 0
+anchors_preset = 0
+offset_left = 0.0
+offset_right = 180.0
+
+[node name="Button" parent="." instance=ExtResource("3_45i5v")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 181.0
+offset_bottom = 49.0
+text = "Info"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

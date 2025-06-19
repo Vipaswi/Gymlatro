@@ -1,0 +1,54 @@
+[gd_scene load_steps=6 format=3 uid="uid://d0pfiyfb1qt3g"]
+
+[ext_resource type="Script" uid="uid://q12mimv72sts" path="res://Scripts/card_slot_holder.gd" id="1_lvsjc"]
+[ext_resource type="Shader" uid="uid://kcuykpnoe8we" path="res://Shaders/scoreboardDark.gdshader" id="2_a7c1j"]
+[ext_resource type="PackedScene" uid="uid://crmsbngth23jf" path="res://Scenes/joker_slot.tscn" id="3_x8g6v"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_05k24"]
+shader = ExtResource("2_a7c1j")
+shader_parameter/rows = 30.0
+shader_parameter/color1 = Color(0.11, 0.11, 0.11, 1)
+shader_parameter/color2 = Color(0, 0, 0, 1)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ik0cq"]
+
+[node name="CardSlotHolder" type="Node2D" node_paths=PackedStringArray("joker_slot_1", "joker_slot_2")]
+script = ExtResource("1_lvsjc")
+joker_slot_1 = NodePath("Control/HorizontalSlotSizer/JokerSlot1")
+joker_slot_2 = NodePath("Control/HorizontalSlotSizer/JokerSlot2")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_05k24")
+offset_left = 102.0
+offset_top = 680.0
+offset_right = 333.0
+offset_bottom = 803.0
+texture = SubResource("PlaceholderTexture2D_ik0cq")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 102.0
+offset_top = 686.0
+offset_right = 333.0
+offset_bottom = 795.0
+size_flags_horizontal = 3
+
+[node name="HorizontalSlotSizer" type="HBoxContainer" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.073
+anchor_top = -0.055
+anchor_right = 0.935
+anchor_bottom = 1.073
+offset_left = -0.0750027
+offset_top = -0.00499964
+offset_right = -0.125031
+offset_bottom = 0.0429916
+
+[node name="JokerSlot1" parent="Control/HorizontalSlotSizer" instance=ExtResource("3_x8g6v")]
+position = Vector2(-43.788, -24)
+
+[node name="JokerSlot2" parent="Control/HorizontalSlotSizer" instance=ExtResource("3_x8g6v")]
+position = Vector2(68.212, -24)

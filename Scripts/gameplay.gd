@@ -47,6 +47,19 @@ var imageDictionary: Dictionary;
 # -> and loading content again
 @onready var run_already = 0;
 
+# Jokers:
+var jokers_array: Array[int]; # An array of size two holding each of the jokers
+var joker_to_replace: int; # The current joker slot to be replaced 
+var extra_lives: int;
+const DEATH_JOKER_INDEX: int = 4;
+
+# Card Slot holder
+@onready var card_slot_holder = %CardSlotHolder;
+
+# The Marketplace
+var marketplace_scene;
+var marketplace_instance;
+
 #initialize starting conditions
 func _ready() -> void:
 	set_initial_conditions();
@@ -62,6 +75,15 @@ func set_initial_conditions() -> void:
 	Card1Control = %Card1Control;
 	Card2Control = %Card2Control;
 	lose_screen = %YouLoseControl;
+	extra_lives = 0;
+	
+	#Pre load the marketplace
+	marketplace_scene = preload("res://Scenes/marketplace.tscn");
+	marketplace_instance = marketplace_scene.instantiate();
+	get_tree().root.add_child(marketplace_instance);
+	marketplace_instance.selected_joker.connect(add_joker);
+	marketplace_instance.hide();
+	
 	
 	#hide LoseScene
 	lose_screen.visible = false;
@@ -224,7 +246,16 @@ func update_stats() -> void:
 	#Increas ante and round
 	ante_score = ante * 100 + ante_score;
 	round_count = round_count + 1; #increase round_count
-	ante = ante + (1 if round_count % 3 == 1 and round_count != 1 else 0);
+	
+	var newAnte: bool = round_count % 3 == 1 and round_count != 1;
+	
+	if(newAnte and run_already == 0):
+		marketplace_instance.reset_marketplace();
+	
+	if(newAnte):
+		marketplace_instance.show();
+	
+	ante = ante + (1 if newAnte else 0);
 	
 	#reset
 	current_score = 0;
@@ -270,19 +301,30 @@ func animateOnSubmit(reps: int, weight: int) -> void:
 	%RepsChips.text = str(reps);
 	%WeightMult.text = str(weight);
 	
+	print("Reps is: " + str(reps));
+	print("Weight is: " + str(weight));
+	
+	#TODO: Add animations for jokers
+	var rep_weight_arr = handle_jokers(reps, weight);
+	var joker_altered_reps = rep_weight_arr[0];
+	var joker_altered_weight = rep_weight_arr[1];
+	
+	print("New Reps is: " + str(joker_altered_reps));
+	print("New Weight is: " + str(joker_altered_weight));
+	
 	#play sub anim
 	%ScorePlayer.play("NewScore");
 	await %ScorePlayer.animation_finished;
 	
 	#calculate properties of anim
-	var new_score = current_score + reps * weight;
+	var new_score = current_score + joker_altered_reps * joker_altered_weight;
 	var current_scoreLabel = %CurrentScore;
 	var initial_score = current_score;
 	var duration = 1.0;
 	
 	#update max score
 	max_score = max(max_score, new_score);
-	total_score = total_score + reps*weight;
+	total_score = total_score + joker_altered_reps*joker_altered_weight;
 	
 	#kill old instances of tweens
 	if is_instance_valid(_score_animation_tween):
@@ -329,9 +371,12 @@ func on_submit(weight: String, reps: String) -> void:
 			update_stats();
 			await switch_card_focus(); 
 		#lose condition
-		elif ((current_score < ante_score) and submitted == 3):	
+		elif (((current_score < ante_score) and submitted == 3) && extra_lives == 0):	
 			is_playing = false;
 			display_loss();
+		else:
+			--extra_lives;
+			#TODO: Remove Death Joker
 		
 		#Enable next button
 		enable_next(submitted, current_card_index); #submitted is, at a minimum, 1
@@ -359,8 +404,53 @@ func enable_next(exclusion: int, index: int) -> void:
 func plays_again() -> void:
 	set_initial_conditions();
 	
-func _on_transition_player_animation_finished(anim_name: StringName):
-	if anim_name == "animate1" or anim_name == "loopcard1":
-		#flip_card();
-		pass;
+# 0  : +5 Reps for every exercise (Ronnie Coleman)
+# 1  : +5 Weight for leg exercises (Chicken joker muscles)
+# 2  : +5 Weight for arm exercises (Hulk Joker)
+# 3  : +100 mult on last exercise (Naruto)
+# 4  : Extra death allowed (Jacked up Death)
+func handle_jokers(reps: int, weight: int) -> Array[int]:
+	for joker_index in jokers_array:
+		match joker_index:
+			0: 
+				reps += 5;
+				print("Ronnie Coleman: five added to reps")
+			1:
+				if current_exercise_name == "Squat" or current_exercise_name == "Deadlift":
+					weight += 5;
+					print("Chicken Joker: five added to weight")
+			2:
+				if current_exercise_name == "Bench Press":
+					weight += 5;
+					print("Hulk Joker: five added to weight")
+			3:
+				# Last Attempt:
+				if submitted == 2:
+					weight += 100;
+					print("Naruto Joker: 100 to weight!")
+		
+	return [reps, weight];
+		
+
+# Activated when the player loses.
+# Removes the death joker from one of the slots
+# And Sets the next slot to be filled to that slot
+func remove_death_joker() -> void:
+	joker_to_replace = jokers_array.find(DEATH_JOKER_INDEX) if jokers_array.size() == 1 else 0;
+	jokers_array.erase(DEATH_JOKER_INDEX); # 4 is death Joker index
+
+func add_joker(index: int) -> void:
+	# Update current joker array
+	jokers_array.set(joker_to_replace,index);
+	
+	# Update correct slot
+	if(joker_to_replace == 0):
+		card_slot_holder.set_joker_slot_1(index);
+	else:
+		card_slot_holder.set_joker_slot_2(index);
+	
+	# Swap joker_to_replace to point to next joker to replace	
+	joker_to_replace = 1 - joker_to_replace; 
+	
+	
 		

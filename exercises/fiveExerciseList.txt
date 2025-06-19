@@ -1,5 +1,3 @@
 Bench Press
 Squat
 Deadlift
-Bicep Curl
-Rows
