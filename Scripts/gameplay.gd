@@ -1,6 +1,6 @@
 extends Node2D
 
-#declare all variables
+#The Essentials - Game Specific State
 var is_playing: bool;
 var current_score: int;
 var ante: int;
@@ -10,39 +10,41 @@ var display_round: int; #bet. 1 and 3
 var max_score: int; 
 var total_score: int;
 
-#signal related variables:
-var submit_reps: bool;
-
-#temp array
+#Exercise String Variables:
 var exercise_array: PackedStringArray;
 var current_exercise_name : String;
 
-#for disabling and renabling:
-var button_array; #an array of size 2 (corresponding ot each card)
+# Button Variables:
+var button_array; #an array of size 2 (corresponding to each card;)
 var input_weight_array; #an array of size 2  (corresponding ot each card) 
 var input_rep_array; #an array of size 2 (corresponding ot each card)
 var submitted: int; #a number from 0 to button_array.size() (3) counting submitted rep, weights
 
-#animation variables
+# Animation Variables
 var transition_player;
 var cards : Array; #animation_player array
 var current_card_index: int;
 var transition_complete: bool;
 var _score_animation_tween: Tween;
+
+# Scene Control
 var Card1Control;
 var Card2Control;
 var lose_screen;
 
-#signals for lose conds:
+# Lose Condition Scene Signals
+# -> Used to set values
 signal set_max_score(max_score: int);
 signal set_ante(ante: int);
 signal set_round(round_count: int);
 signal set_total_score(total_score: int);
 
-#preloaded exercise images:
+# Preloaded Exercise Images:
 var imageDictionary: Dictionary;
 
-#to avoid redundancy
+# To Avoid Redundancy:
+# -> helps avoid re-establishing signal connections
+# -> and loading content again
 @onready var run_already = 0;
 
 #initialize starting conditions
@@ -55,7 +57,6 @@ func set_initial_conditions() -> void:
 	is_playing = true;
 	max_score = 0;
 	total_score = 0;
-	submit_reps = false;
 	transition_complete = true;
 	_score_animation_tween = null;
 	Card1Control = %Card1Control;
@@ -330,7 +331,6 @@ func on_submit(weight: String, reps: String) -> void:
 		#lose condition
 		elif ((current_score < ante_score) and submitted == 3):	
 			is_playing = false;
-			submit_reps = false;
 			display_loss();
 		
 		#Enable next button
