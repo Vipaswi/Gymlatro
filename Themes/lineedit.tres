@@ -1,0 +1,28 @@
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://cdqannvs4mgim"]
+
+[ext_resource type="FontFile" uid="uid://bogbaja756dmg" path="res://Fonts/Minecraft.ttf" id="1_2y7sm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2y7sm"]
+bg_color = Color(1, 1, 1, 0)
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2y7sm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5eceu"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1gwd2"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_bottom = 1
+border_color = Color(0.61339, 0.61339, 0.61339, 1)
+
+[resource]
+default_font = ExtResource("1_2y7sm")
+Button/colors/font_color = Color(1, 1, 1, 1)
+Button/colors/font_disabled_color = Color(0.65098, 0.65098, 0.65098, 1)
+Button/styles/normal = SubResource("StyleBoxFlat_2y7sm")
+LineEdit/styles/focus = SubResource("StyleBoxEmpty_2y7sm")
+LineEdit/styles/normal = SubResource("StyleBoxFlat_5eceu")
+LineEdit/styles/read_only = SubResource("StyleBoxFlat_1gwd2")

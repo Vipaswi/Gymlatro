@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://cypla4mf33mv6"]
+
+[ext_resource type="FontFile" uid="uid://bogbaja756dmg" path="res://Fonts/Minecraft.ttf" id="1_valg0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ei405"]
+
+[node name="Button2" type="Button"]
+anchors_preset = -1
+anchor_left = -0.044
+anchor_right = -0.044
+offset_left = -0.0799994
+offset_right = 179.92
+offset_bottom = 50.0
+theme_override_fonts/font = ExtResource("1_valg0")
+theme_override_font_sizes/font_size = 23
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ei405")
+text = "Settings"

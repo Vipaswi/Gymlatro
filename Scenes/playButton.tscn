@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://b7bl55nnnhp7a"]
+
+[ext_resource type="FontFile" uid="uid://bogbaja756dmg" path="res://Fonts/Minecraft.ttf" id="1_ybuuc"]
+
+[sub_resource type="Theme" id="Theme_2nhjh"]
+default_font = ExtResource("1_ybuuc")
+default_font_size = 23
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bjha6"]
+
+[node name="Button" type="Button"]
+anchors_preset = -1
+anchor_left = 1.325
+anchor_top = 8.325
+anchor_right = 1.325
+anchor_bottom = 8.325
+offset_left = -246.5
+offset_top = -407.925
+offset_right = -65.5
+offset_bottom = -358.925
+theme = SubResource("Theme_2nhjh")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_bjha6")
+text = "Play"

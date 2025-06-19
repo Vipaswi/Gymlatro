@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://bnnoqhjsevbgc"]
+
+[ext_resource type="Shader" uid="uid://4oy7qxtaqfeu" path="res://Shaders/blueButtonRows.gdshader" id="1_myji5"]
+[ext_resource type="Texture2D" uid="uid://dvti7a6i2nj08" path="res://Image_Assets/mask.png" id="2_oj2y1"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e8dv2"]
+shader = ExtResource("1_myji5")
+shader_parameter/mask_texture = ExtResource("2_oj2y1")
+shader_parameter/rows = 200.0
+shader_parameter/color1 = Color(0.24, 0.56, 0.92, 1)
+shader_parameter/color2 = Color(0.227, 0.51, 0.9176, 1)
+
+[node name="ColorRect" type="ColorRect"]
+material = SubResource("ShaderMaterial_e8dv2")
+anchors_preset = -1
+offset_left = -8.0
+offset_right = 172.0
+offset_bottom = 49.0
