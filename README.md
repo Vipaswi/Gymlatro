@@ -133,7 +133,6 @@ If you're exporting to Android:
 - [ ] Implement analytics (avg reps/weight)
 - [ ] Add background music 🎵
 - [ ] Add settings and pause scenes
-- [ ] Refactor and organize file structure
 
 ## 🙋‍♂️ Contributing
 
