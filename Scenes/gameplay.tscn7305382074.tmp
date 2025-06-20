@@ -531,10 +531,10 @@ tracks/11/path = NodePath("ScorePlayer/AudioStreamPlayer2D:playing")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
-"times": PackedFloat32Array(0, 0.0666667, 0.433333, 0.733333),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.0666667, 0.433333),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
-"values": [false, true, true, false]
+"values": [false, true, true]
 }
 
 [sub_resource type="Animation" id="Animation_eod45"]
@@ -674,7 +674,6 @@ tracks/10/keys = {
 
 [sub_resource type="Animation" id="Animation_r5xtw"]
 resource_name = "add_to_scoreboard"
-length = 0.45
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -757,7 +756,7 @@ tracks/6/keys = {
 "times": PackedFloat32Array(0.233299, 0.4),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(149, 236), Vector2(149, 158)]
+"values": [Vector2(149, 236), Vector2(177, 158)]
 }
 tracks/7/type = "value"
 tracks/7/imported = false
@@ -994,41 +993,41 @@ metadata/_edit_use_anchors_ = true
 [node name="RepsChips" type="Label" parent="."]
 unique_name_in_owner = true
 visible = false
-offset_left = 149.0
-offset_top = 236.0
-offset_right = 201.0
-offset_bottom = 267.0
-pivot_offset = Vector2(52, 16)
+offset_left = 142.0
+offset_top = 177.0
+offset_right = 194.0
+offset_bottom = 208.0
+pivot_offset = Vector2(52, 24)
 theme = ExtResource("10_1qy1k")
 theme_override_colors/font_color = Color(0.333333, 0.717647, 0.92549, 1)
 theme_override_font_sizes/font_size = 24
 text = "1000"
-horizontal_alignment = 2
+horizontal_alignment = 1
 vertical_alignment = 2
 
 [node name="MultiplierSign" type="Label" parent="."]
 visible = false
 offset_left = 203.0
-offset_top = 240.0
+offset_top = 175.0
 offset_right = 222.0
-offset_bottom = 268.0
+offset_bottom = 203.0
 scale = Vector2(1, 0.1)
-pivot_offset = Vector2(10, 14)
+pivot_offset = Vector2(0, 28)
 theme = ExtResource("10_1qy1k")
 theme_override_font_sizes/font_size = 27
 text = "X"
-horizontal_alignment = 1
+horizontal_alignment = 2
 vertical_alignment = 2
 
 [node name="WeightMult" type="Label" parent="."]
 unique_name_in_owner = true
 visible = false
 offset_left = 225.0
-offset_top = 240.0
+offset_top = 175.0
 offset_right = 283.0
-offset_bottom = 268.0
+offset_bottom = 203.0
 scale = Vector2(1, 0.1)
-pivot_offset = Vector2(0, 14)
+pivot_offset = Vector2(0, 28)
 theme = ExtResource("10_1qy1k")
 theme_override_colors/font_color = Color(1, 0, 0.686275, 1)
 theme_override_font_sizes/font_size = 27

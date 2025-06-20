@@ -50,9 +50,19 @@ var imageDictionary: Dictionary;
 # Jokers:
 var jokers_array: Array[int]; # An array of size two holding each of the jokers
 var joker_to_replace: int; # The current joker slot to be replaced 
-var extra_lives: int;
-const DEATH_JOKER_INDEX: int = 4;
+
+# Joker rel. Variables
+var extra_lives: int; # For death joker
+
+# The amount of jokers (changing this will not dynamically change the slots)
 const JOKER_SLOT_AMOUNT: int = 2;
+
+# Joker Powerup Values
+const YEAH_BUDDY_JOKER = 0;
+const CHICKEN_JOKER = 1;
+const GREEN_JOKER = 2;
+const PLOT_ARMOR_JOKER = 3;
+const DEATH_JOKER_INDEX: int = 4;
 
 # Card Slot holder
 @onready var card_slot_holder = %CardSlotHolder;
@@ -288,7 +298,6 @@ func _process(_delta: float) -> void:
 	if(is_playing):
 		#win condition
 		setLabelText();
-		
 
 func reset_inputs() -> void:
 	for i in range(0, button_array[current_card_index].size()):
@@ -304,16 +313,25 @@ func reset_inputs() -> void:
 	disable_all_buttons(current_card_index);
 	enable_next(0, current_card_index);
 
-func animateOnSubmit(reps: int, weight: int) -> void:
+func set_reps_mult_text(reps: String, weight: String) -> void:
 	#convert for sub anim
 	%RepsChips.text = str(reps);
 	%WeightMult.text = str(weight);
+
+func animateOnSubmit(reps: int, weight: int) -> void:
+	#convert for sub anim
+	set_reps_mult_text(str(reps), str(weight));
 	
 	print("Reps is: " + str(reps));
 	print("Weight is: " + str(weight));
 	
-	#TODO: Add animations for jokers
-	var rep_weight_arr = handle_jokers(reps, weight);
+	# TODO: Show Rep and Mult from NewScore, and leave it there
+	%ScorePlayer.play("NewScore");
+	await %ScorePlayer.animation_finished;
+	
+	# Animate Joker stuff
+	var rep_weight_arr = await handle_jokers(reps, weight);
+	
 	var joker_altered_reps = rep_weight_arr[0];
 	var joker_altered_weight = rep_weight_arr[1];
 	
@@ -321,7 +339,7 @@ func animateOnSubmit(reps: int, weight: int) -> void:
 	print("New Weight is: " + str(joker_altered_weight));
 	
 	#play sub anim
-	%ScorePlayer.play("NewScore");
+	%ScorePlayer.play("add_to_scoreboard");
 	await %ScorePlayer.animation_finished;
 	
 	#calculate properties of anim
@@ -382,9 +400,12 @@ func on_submit(weight: String, reps: String) -> void:
 		elif (((current_score < ante_score) and submitted == 3) && extra_lives == 0):	
 			is_playing = false;
 			display_loss();
-		else:
+		elif (extra_lives > 0):
 			--extra_lives;
-			#TODO: Remove Death Joker
+			# TODO: Death Joker Animation
+			remove_death_joker();
+			update_stats();
+			await switch_card_focus();
 		
 		#Enable next button
 		enable_next(submitted, current_card_index); #submitted is, at a minimum, 1
@@ -411,7 +432,14 @@ func enable_next(exclusion: int, index: int) -> void:
 
 func plays_again() -> void:
 	set_initial_conditions();
-	
+
+func play_mult_animation(reps: int, weight: int, index: int, color: Color, text: String) -> void:
+	var joker_animation_label : Label = card_slot_holder.get_label();
+	joker_animation_label.modulate = color;
+	joker_animation_label.text = text;
+	set_reps_mult_text(str(reps), str(weight)); 
+	await card_slot_holder.play_slot_animation(index); 
+
 # 0  : +5 Reps for every exercise (Ronnie Coleman)
 # 1  : +5 Weight for leg exercises (Chicken joker muscles)
 # 2  : +5 Weight for arm exercises (Hulk Joker)
@@ -421,24 +449,34 @@ func handle_jokers(reps: int, weight: int) -> Array[int]:
 	# Pring Jokers Array
 	print("Jokers array being handled: " + str(jokers_array));
 	
-	for joker_index in jokers_array:
-		match joker_index:
+	var joker_animation_label : Label = card_slot_holder.get_label();
+	
+	for i in range(0, jokers_array.size()):
+		match jokers_array[i]:
 			0: 
 				reps += 5;
+				await play_mult_animation(reps, weight, i, Color.BLUE, "+5 Reps")
 				print("Ronnie Coleman: five added to reps")
 			1:
 				if current_exercise_name == "Squat" or current_exercise_name == "Deadlift":
 					weight += 5;
+					await play_mult_animation(reps, weight, i, Color.RED, "+5 lbs")
 					print("Chicken Joker: five added to weight")
 			2:
 				if current_exercise_name == "Bench Press":
 					weight += 5;
+					await play_mult_animation(reps, weight, i, Color.RED, "+5 lbs");
 					print("Hulk Joker: five added to weight")
 			3:
 				# Last Attempt:
 				if submitted == 2:
 					weight += 100;
+					await play_mult_animation(reps, weight, i, Color.RED, "+100 lbs");
 					print("Naruto Joker: 100 to weight!")
+		
+		# Reset text
+		joker_animation_label.text = ""; 
+			
 			
 	return [reps, weight];
 		
@@ -448,17 +486,29 @@ func handle_jokers(reps: int, weight: int) -> Array[int]:
 # And Sets the next slot to be filled to that slot
 func remove_death_joker() -> void:
 	joker_to_replace = jokers_array.find(DEATH_JOKER_INDEX) if jokers_array.size() == 1 else 0;
-	jokers_array.erase(DEATH_JOKER_INDEX); # 4 is death Joker index
+	jokers_array.set(jokers_array.find(DEATH_JOKER_INDEX), -1);
+	
+	# Update slot with null (-1 as index)
+	card_slot_holder.set_joker_slot(joker_to_replace, -1);
+		
+	--extra_lives;
 
 func add_joker(index: int) -> void:
+	# Get current joker
+	var replaced_joker = jokers_array.get(joker_to_replace);
+	
+	# If the death joker is replaced, reduce extra lives by one
+	if(replaced_joker == DEATH_JOKER_INDEX):
+		--extra_lives;
+	
 	# Update current joker array
 	jokers_array.set(joker_to_replace,index);
 	
-	# Update correct slot
-	if(joker_to_replace == 0):
-		card_slot_holder.set_joker_slot_1(index);
-	else:
-		card_slot_holder.set_joker_slot_2(index);
+	# Update image
+	card_slot_holder.set_joker_slot(joker_to_replace, index);
+	
+	# Add extra life if the new index is the death joker:
+	extra_lives = extra_lives + 1 if index == DEATH_JOKER_INDEX else extra_lives; 
 	
 	# Swap joker_to_replace to point to next joker to replace	
 	joker_to_replace = 1 - joker_to_replace; 
