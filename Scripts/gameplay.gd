@@ -52,6 +52,7 @@ var jokers_array: Array[int]; # An array of size two holding each of the jokers
 var joker_to_replace: int; # The current joker slot to be replaced 
 var extra_lives: int;
 const DEATH_JOKER_INDEX: int = 4;
+const JOKER_SLOT_AMOUNT: int = 2;
 
 # Card Slot holder
 @onready var card_slot_holder = %CardSlotHolder;
@@ -76,6 +77,13 @@ func set_initial_conditions() -> void:
 	Card2Control = %Card2Control;
 	lose_screen = %YouLoseControl;
 	extra_lives = 0;
+	
+	# Joker Instantiations:
+	jokers_array.resize(JOKER_SLOT_AMOUNT);
+	
+	# Make negative
+	jokers_array[0] = -1;
+	jokers_array[1] = -1;
 	
 	#Pre load the marketplace
 	marketplace_scene = preload("res://Scenes/marketplace.tscn");
@@ -410,6 +418,9 @@ func plays_again() -> void:
 # 3  : +100 mult on last exercise (Naruto)
 # 4  : Extra death allowed (Jacked up Death)
 func handle_jokers(reps: int, weight: int) -> Array[int]:
+	# Pring Jokers Array
+	print("Jokers array being handled: " + str(jokers_array));
+	
 	for joker_index in jokers_array:
 		match joker_index:
 			0: 
@@ -428,7 +439,7 @@ func handle_jokers(reps: int, weight: int) -> Array[int]:
 				if submitted == 2:
 					weight += 100;
 					print("Naruto Joker: 100 to weight!")
-		
+			
 	return [reps, weight];
 		
 
