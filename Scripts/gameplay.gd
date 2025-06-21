@@ -267,12 +267,6 @@ func update_stats() -> void:
 	
 	var newAnte: bool = round_count % 3 == 1 and round_count != 1;
 	
-	if(newAnte and run_already == 0):
-		marketplace_instance.reset_marketplace();
-	
-	if(newAnte):
-		marketplace_instance.show();
-	
 	ante = ante + (1 if newAnte else 0);
 	
 	#reset
@@ -317,6 +311,17 @@ func set_reps_mult_text(reps: String, weight: String) -> void:
 	#convert for sub anim
 	%RepsChips.text = str(reps);
 	%WeightMult.text = str(weight);
+
+func activate_marketplace() -> void:
+	var newAnte: bool = (round_count % 3 == 0);
+	
+	# Avoid Redundancy
+	if(newAnte and run_already != 0):
+		marketplace_instance.reset_marketplace();
+	
+	if(newAnte):
+		marketplace_instance.show();
+		await marketplace_instance.hidden;
 
 func animateOnSubmit(reps: int, weight: int) -> void:
 	#convert for sub anim
@@ -385,18 +390,21 @@ func animateOnSubmit(reps: int, weight: int) -> void:
 func on_submit(weight: String, reps: String) -> void:
 	#if weight.length() > 0 or reps.length() > 0:
 	if(weight.length() * reps.length() > 0):
-		#animate
+		# Animate
 		await animateOnSubmit(int(reps), int(weight));
+		
+		# Get marketplace if necessary
+		await activate_marketplace();
 		
 		#increase submitted
 		submitted = submitted + 1;
 		
-		#win condition
+		# Win condition
 		if(current_score >= ante_score):
 			await get_tree().create_timer(1).timeout; #timeout for a second so users can see their score
 			update_stats();
 			await switch_card_focus(); 
-		#lose condition
+		# Lose condition
 		elif (((current_score < ante_score) and submitted == 3) && extra_lives == 0):	
 			is_playing = false;
 			display_loss();
@@ -407,7 +415,7 @@ func on_submit(weight: String, reps: String) -> void:
 			update_stats();
 			await switch_card_focus();
 		
-		#Enable next button
+		# Enable next button
 		enable_next(submitted, current_card_index); #submitted is, at a minimum, 1
 
 func disable_all_buttons(index: int) -> void:

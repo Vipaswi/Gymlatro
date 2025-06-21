@@ -290,9 +290,9 @@ position = Vector2(68.212, -24)
 
 [node name="Label_Animation" type="Label" parent="."]
 unique_name_in_owner = true
-offset_left = 113.0
+offset_left = 225.0
 offset_top = 662.0
-offset_right = 210.0
+offset_right = 322.0
 offset_bottom = 681.0
 pivot_offset = Vector2(52, 19)
 theme = ExtResource("4_x8g6v")
