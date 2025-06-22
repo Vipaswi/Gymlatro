@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://d0pfiyfb1qt3g"]
+[gd_scene load_steps=13 format=3 uid="uid://d0pfiyfb1qt3g"]
 
 [ext_resource type="Script" uid="uid://q12mimv72sts" path="res://Scripts/card_slot_holder.gd" id="1_lvsjc"]
 [ext_resource type="Shader" uid="uid://kcuykpnoe8we" path="res://Shaders/scoreboardDark.gdshader" id="2_a7c1j"]
@@ -163,6 +163,18 @@ tracks/5/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Control/HorizontalSlotSizer/JokerSlot1:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_y7w7u"]
 resource_name = "First_Slot_Anim_2"
@@ -239,11 +251,27 @@ tracks/5/keys = {
 "values": [true, false]
 }
 
+[sub_resource type="Animation" id="Animation_x8g6v"]
+resource_name = "slot_1_disappearing_anim"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control/HorizontalSlotSizer/JokerSlot1:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5xt6e"]
 _data = {
 &"First_Slot_Anim": SubResource("Animation_s0qam"),
 &"RESET": SubResource("Animation_k011m"),
-&"Second_Slot_Anim": SubResource("Animation_y7w7u")
+&"Second_Slot_Anim": SubResource("Animation_y7w7u"),
+&"slot_1_disappearing_anim": SubResource("Animation_x8g6v")
 }
 
 [node name="CardSlotHolder" type="Node2D" node_paths=PackedStringArray("joker_slot_1", "joker_slot_2", "animation_player")]

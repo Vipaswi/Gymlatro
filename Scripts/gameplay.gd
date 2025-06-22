@@ -313,7 +313,7 @@ func set_reps_mult_text(reps: String, weight: String) -> void:
 	%WeightMult.text = str(weight);
 
 func activate_marketplace() -> void:
-	var newAnte: bool = (round_count % 3 == 0);
+	var newAnte: bool = (round_count % 3 == 0) and current_score >= ante_score;
 	
 	# Avoid Redundancy
 	if(newAnte and run_already != 0):
@@ -395,23 +395,26 @@ func on_submit(weight: String, reps: String) -> void:
 		
 		# Get marketplace if necessary
 		await activate_marketplace();
-		
+		print("after market")
 		#increase submitted
 		submitted = submitted + 1;
 		
+		var win_condition : bool = current_score >= ante_score;
+		var submitted_all : bool = submitted == 3;
+		
 		# Win condition
-		if(current_score >= ante_score):
+		if(win_condition):
 			await get_tree().create_timer(1).timeout; #timeout for a second so users can see their score
 			update_stats();
 			await switch_card_focus(); 
 		# Lose condition
-		elif (((current_score < ante_score) and submitted == 3) && extra_lives == 0):	
+		elif (!win_condition and submitted_all and extra_lives == 0):	
 			is_playing = false;
 			display_loss();
-		elif (extra_lives > 0):
+		elif (extra_lives > 0 and submitted_all and !win_condition):
 			--extra_lives;
-			# TODO: Death Joker Animation
 			remove_death_joker();
+			await play_transition("Card_Rip");
 			update_stats();
 			await switch_card_focus();
 		

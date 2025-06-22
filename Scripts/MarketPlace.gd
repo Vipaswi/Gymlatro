@@ -63,6 +63,10 @@ func reset_marketplace() -> void:
 	# Set Variable
 	current_card_index = 0;
 	
+	# Ensure Buttons are correctly disbled
+	right_button.disabled = false;
+	left_button.disabled = true;
+	
 	update_joker_image_texture();
 
 func update_joker_image_texture() -> void:
