@@ -184,7 +184,7 @@ func get_exercises() -> void:
 
 #is responsible for returning a new random card from the file system
 func get_new_random_card() -> void:
-	var randomInt = randi() % exercise_array.size();
+	var randomInt = (round_count - 1) % exercise_array.size();
 	current_exercise_name = exercise_array.get(randomInt);
 	
 	var imageTexture = imageDictionary.get(current_exercise_name);
@@ -265,6 +265,9 @@ func update_stats() -> void:
 	ante_score = ante * 100 + ante_score;
 	round_count = round_count + 1; #increase round_count
 	
+	%ScorePlayer.play("round_increment");
+	await %ScorePlayer.animation_finished;
+	
 	var newAnte: bool = round_count % 3 == 1 and round_count != 1;
 	
 	ante = ante + (1 if newAnte else 0);
@@ -327,9 +330,6 @@ func animateOnSubmit(reps: int, weight: int) -> void:
 	#convert for sub anim
 	set_reps_mult_text(str(reps), str(weight));
 	
-	print("Reps is: " + str(reps));
-	print("Weight is: " + str(weight));
-	
 	# TODO: Show Rep and Mult from NewScore, and leave it there
 	%ScorePlayer.play("NewScore");
 	await %ScorePlayer.animation_finished;
@@ -339,9 +339,6 @@ func animateOnSubmit(reps: int, weight: int) -> void:
 	
 	var joker_altered_reps = rep_weight_arr[0];
 	var joker_altered_weight = rep_weight_arr[1];
-	
-	print("New Reps is: " + str(joker_altered_reps));
-	print("New Weight is: " + str(joker_altered_weight));
 	
 	#play sub anim
 	%ScorePlayer.play("add_to_scoreboard");
@@ -386,6 +383,15 @@ func animateOnSubmit(reps: int, weight: int) -> void:
 		_score_animation_tween.queue_free();
 		_score_animation_tween = null;
 	
+func switch_or_reset() -> void:
+	if(round_count % 3 == 1 and round_count != 1):
+		await switch_card_focus(); # Switch the cards
+	else:
+		cards[current_card_index].play("flip_card")
+		await cards[current_card_index].animation_finished;
+		reset_inputs();
+		cards[current_card_index].play("CardFlip");
+		await cards[current_card_index].animation_finished;
 
 func on_submit(weight: String, reps: String) -> void:
 	#if weight.length() > 0 or reps.length() > 0:
@@ -395,7 +401,6 @@ func on_submit(weight: String, reps: String) -> void:
 		
 		# Get marketplace if necessary
 		await activate_marketplace();
-		print("after market")
 		#increase submitted
 		submitted = submitted + 1;
 		
@@ -405,8 +410,8 @@ func on_submit(weight: String, reps: String) -> void:
 		# Win condition
 		if(win_condition):
 			await get_tree().create_timer(1).timeout; #timeout for a second so users can see their score
-			update_stats();
-			await switch_card_focus(); 
+			await update_stats();
+			await switch_or_reset();
 		# Lose condition
 		elif (!win_condition and submitted_all and extra_lives == 0):	
 			is_playing = false;
@@ -415,8 +420,8 @@ func on_submit(weight: String, reps: String) -> void:
 			--extra_lives;
 			remove_death_joker();
 			await play_transition("Card_Rip");
-			update_stats();
-			await switch_card_focus();
+			await update_stats();
+			await switch_or_reset();
 		
 		# Enable next button
 		enable_next(submitted, current_card_index); #submitted is, at a minimum, 1
@@ -458,7 +463,6 @@ func play_mult_animation(reps: int, weight: int, index: int, color: Color, text:
 # 4  : Extra death allowed (Jacked up Death)
 func handle_jokers(reps: int, weight: int) -> Array[int]:
 	# Pring Jokers Array
-	print("Jokers array being handled: " + str(jokers_array));
 	
 	var joker_animation_label : Label = card_slot_holder.get_label();
 	
@@ -467,23 +471,19 @@ func handle_jokers(reps: int, weight: int) -> Array[int]:
 			0: 
 				reps += 5;
 				await play_mult_animation(reps, weight, i, Color.BLUE, "+5 Reps")
-				print("Ronnie Coleman: five added to reps")
 			1:
 				if current_exercise_name == "Squat" or current_exercise_name == "Deadlift":
 					weight += 5;
 					await play_mult_animation(reps, weight, i, Color.RED, "+5 lbs")
-					print("Chicken Joker: five added to weight")
 			2:
 				if current_exercise_name == "Bench Press":
 					weight += 5;
 					await play_mult_animation(reps, weight, i, Color.RED, "+5 lbs");
-					print("Hulk Joker: five added to weight")
 			3:
 				# Last Attempt:
 				if submitted == 2:
 					weight += 100;
 					await play_mult_animation(reps, weight, i, Color.RED, "+100 lbs");
-					print("Naruto Joker: 100 to weight!")
 		
 		# Reset text
 		joker_animation_label.text = ""; 
