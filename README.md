@@ -12,12 +12,13 @@ The game consists of:
 - Two animated cards for input
 - A "score threshold" (ante score) that increases every round
 - Balatro-inspired shaders, UI, and sound effects
+- Five jokers, each with their own power-up
 
 You enter your **weight lifted** and **number of reps** to simulate "playing a card." Your goal is to beat the ante score within three tries.
 
 ## 🗃 Project Structure
 
-A cloned copy of this repo contains all required files to run the game:
+To play the game on Android, the .apk file can be downloaded. Alternatively, for other formats, the repo can be cloned and exported in Godot—I would suggest just asking me to do it. The general structure is below:
 ```
 gymlatro/
 ├── audio/ # Sound effects (chip clicks, etc.)
@@ -46,7 +47,7 @@ Open the project in the Godot editor.
 
 Press ▶️ to run it, or export to Android via Project > Export.
 
-✅ Note: No dependencies or assets need to be installed — everything is included.
+✅ Note: No dependencies or assets need to be installed — everything is included. However, to export the game to a different format, all asset paths must be included (otherwise there *will* be export errors).
 
 ### 🧩 Scenes
 
@@ -55,7 +56,7 @@ Press ▶️ to run it, or export to Android via Project > Export.
 ### 🏠 `Homepage.tscn`
 - Two buttons:
   - `Play`: Starts the game ✅
-  - `Credits`: Aesthetic-only 🎨
+  - `Aesthetic Button`: Fills up space :D 🎨
 - Styled with Balatro-style shaders and animation
 
 ### 🎮 `GamePlay.tscn`
@@ -128,7 +129,7 @@ If you're exporting to Android:
 
 ## 🧪 Future Improvements
 
-- [ ] Add images for all exercises
+- [ ] Add more exercises
 - [ ] Add difficulty levels and scaling
 - [ ] Implement analytics (avg reps/weight)
 - [ ] Add background music 🎵
