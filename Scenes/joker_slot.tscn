@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3 uid="uid://crmsbngth23jf"]
+
+[ext_resource type="Script" uid="uid://dbqcedysg0na6" path="res://Scenes/joker_slot.gd" id="1_dof03"]
+[ext_resource type="Texture2D" uid="uid://bnlfyku8iovkc" path="res://Image_Assets/joker_slot.png" id="2_udr8c"]
+
+[node name="JokerSlot" type="Node2D"]
+script = ExtResource("1_dof03")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 32.0
+offset_top = 32.0
+offset_right = 140.0
+offset_bottom = 142.0
+
+[node name="Background" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_right = 108.0
+offset_bottom = 110.0
+texture = ExtResource("2_udr8c")
+expand_mode = 3
+
+[node name="JokerMan" type="TextureRect" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 17.0
+offset_top = 4.0
+offset_right = 93.0
+offset_bottom = 106.0
+expand_mode = 1
+stretch_mode = 4
